@@ -1,0 +1,25 @@
+{
+  "name": "react-facebook-login",
+  "version": "0.0.1",
+  "homepage": "https://github.com/keppelen/react-facebook-login",
+  "authors": [
+    "Giovanni Keppelen <keppelen.as@gmail.com>"
+  ],
+  "description": "A Component React for Facebook Login",
+  "main": "src/react-facebook-login.js",
+  "keywords": [
+    "facebook",
+    "login",
+    "facebook",
+    "react",
+    "reactjs"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
