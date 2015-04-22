@@ -18,7 +18,10 @@ var FacebookLogin = React.createClass({displayName: "FacebookLogin",
       });
 
       FB.getLoginStatus(function(response) {
-        this.statusChangeCallback(response);
+        var autoLoad = this.props.autoLoad || false;
+        if ( autoLoad ) {
+          this.statusChangeCallback(response);
+        }
       }.bind(this));
     }.bind(this);
 
