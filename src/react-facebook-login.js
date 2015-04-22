@@ -2,7 +2,7 @@ var FacebookLogin = React.createClass({
   render: function() {
     return (
       <div>
-        <button className="facebook-login" onClick={this.handleClick}>Login com Facebook</button>
+        <button className={this.props.class} onClick={this.handleClick}>{this.props.callToActiion}</button>
         <div id="fb-root"></div>
       </div>
     )
