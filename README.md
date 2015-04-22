@@ -9,6 +9,8 @@ var MyComponent = React.createClass({
       <FacebookLogin
         appId="1088597931155576"
         xfbml="false"
+        callToAction="Login com Facebook"
+        class="facebook-login"
         scope="public_profile, email, user_birthday"
         loginHandler={ this.resultFacebookLogin } />
     );
