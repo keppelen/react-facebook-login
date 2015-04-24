@@ -38,6 +38,8 @@ var FacebookLogin = React.createClass({
   testAPI: function( authResponse ) {
     FB.api('/me', function(response) {
 
+      console.log(response);
+
       response.status = true;
       response.accessToken = authResponse.accessToken;
       response.expiresIn = authResponse.expiresIn;
@@ -48,26 +50,17 @@ var FacebookLogin = React.createClass({
     }.bind(this));
   },
 
-  statusChangeCallback: function(response) {
-
-    if (response.status === 'connected') {
-      this.testAPI( response.authResponse );
-    } else if (response.status === 'not_authorized') {
-      this.props.loginHandler( { status: false, message: 'User not authorized' } );
+  checkLoginState: function(response) {
+    if (response.authResponse) {
+      this.testAPI(response.authResponse);
     } else {
-      this.props.loginHandler( { status: false, message: 'User not logged' } );
+      this.props.loginHandler( { status: false } );
     }
-  },
-
-  checkLoginState: function() {
-    FB.getLoginStatus(function(response) {
-      this.statusChangeCallback(response);
-    }.bind(this));
   },
 
   handleClick: function() {
     var scope = {scope: this.props.scope };
-    FB.login(this.checkLoginState(), scope);
+    FB.login(this.checkLoginState, scope);
   },
 
 });
