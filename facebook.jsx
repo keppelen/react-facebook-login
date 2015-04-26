@@ -49,7 +49,7 @@ module.exports = React.createClass({
     responseApi: function( authResponse ) {
       FB.api('/me', function(response) {
 
-        response.status = true;
+        response.status = 'connected';
         response.accessToken = authResponse.accessToken;
         response.expiresIn = authResponse.expiresIn;
         response.signedRequest = authResponse.signedRequest;
@@ -70,7 +70,7 @@ module.exports = React.createClass({
       } else {
 
         if ( this.props.loginHandler ) {
-          this.props.loginHandler( { status: false } );
+          this.props.loginHandler( { status: response.status } );
         }
 
       }
