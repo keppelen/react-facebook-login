@@ -8,8 +8,8 @@ module.exports = React.createClass({
       return (
         <div>
           <button
-            className={this.props.class}
-            onClick={this.handleClick}>
+            className={ this.props.class ? this.props.class : 'facebook-login'}
+            onClick={ this.handleClick }>
               { this.props.callToAction ? this.props.callToAction : "Login with Facebook"}
           </button>
           <div id="fb-root"></div>
@@ -77,8 +77,8 @@ module.exports = React.createClass({
     },
 
     handleClick: function() {
-      var scope = {scope: this.props.scope };
+      var valueScope = this.props.scope || 'public_profile, email, user_birthday';
 
-      FB.login(this.checkLoginState, scope);
+      FB.login(this.checkLoginState, { scope: valueScope });
     }
 });
