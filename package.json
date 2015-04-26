@@ -1,16 +1,24 @@
 {
   "name": "react-facebook-login",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A Component React for Facebook Login",
-  "main": "src/react-facebook-login.js",
+  "main": "facebook.jsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Giovanni Keppelen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/keppelen/react-facebook-login.git"
+  },
+  "keywords": [
+    "facebook",
+    "react",
+    "react-component"
+  ],
+  "author": "Giovanni Keppelen <keppelen.as@gmail.com> (http://github.com/keppelen)",
   "license": "MIT",
-  "dependencies": {
-    "gulp": "^3.8.11",
-    "gulp-connect": "^2.2.0",
-    "react": "^0.13.1"
-  }
+  "bugs": {
+    "url": "https://github.com/keppelen/react-facebook-login/issues"
+  },
+  "homepage": "https://github.com/keppelen/react-facebook-login"
 }
