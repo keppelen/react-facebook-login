@@ -21,7 +21,7 @@ module.exports = React.createClass({
 
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : this.props.appId,
+          appId      : this.props.appId || '',
           xfbml      : this.props.xfbml || false,
           version    : 'v2.3'
         });
