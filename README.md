@@ -6,8 +6,8 @@
 ``` npm install react ```
 ``` npm install react-facebook-login ```
 
-##How to use
-```JS
+## How to use
+```JAVASCRIPT
 'use strict'
 
 var React = require('react'),
@@ -23,10 +23,14 @@ React.renderComponent(
         appId="1088597931155576"
         class="facebook-login"
         scope="public_profile, email, user_birthday"
-        loginHandler={ resultFacebookLogin } />, document.getElementById('content'))
+        loginHandler={ resultFacebookLogin } />,
+
+  document.getElementById('content'))
+
 ```
 
 ```HTML
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,6 +42,7 @@ React.renderComponent(
     </div>
 </body>
 </html>
+
 ```
 
 ##Parameters
