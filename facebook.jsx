@@ -10,7 +10,7 @@ module.exports = React.createClass({
           <button
             className={this.props.class}
             onClick={this.handleClick}>
-              { this.props.callToAction ? this.props.callToAction : "Login com Facebook"}
+              { this.props.callToAction ? this.props.callToAction : "Login with Facebook"}
           </button>
           <div id="fb-root"></div>
         </div>
