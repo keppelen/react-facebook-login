@@ -4,7 +4,7 @@
 
 ##Install dependences
 ``` npm install react ```
-``` npm install react-facebook-login ```
+``` npm install react-facebook-login --save ```
 
 ## How to use
 ```JAVASCRIPT
@@ -18,14 +18,14 @@ var resultFacebookLogin = function( response ) {
   console.log( response );
 }
 
-React.renderComponent(
+React.render(
   <Facebook
         appId="1088597931155576"
         class="facebook-login"
         scope="public_profile, email, user_birthday"
         loginHandler={ resultFacebookLogin } />,
 
-  document.getElementById('content'))
+  document.getElementById('facebook-login'))
 
 ```
 
@@ -37,9 +37,7 @@ React.renderComponent(
     <title>Example React Facebook Login</title>
 </head>
 <body>
-    <div id="content">
-        <!-- this is where the root react component will get rendered -->
-    </div>
+    <div id="facebook-login"></div>
 </body>
 </html>
 

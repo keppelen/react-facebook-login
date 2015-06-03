@@ -1,10 +1,13 @@
 {
   "name": "react-facebook-login",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "A Component React for Facebook Login",
-  "main": "facebook.jsx",
+  "main": "dist/facebook-login.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm install && npm run dev",
+    "dev": "webpack-dev-server --progress --colors --port 3000",
+    "build": "webpack -p"
   },
   "repository": {
     "type": "git",
@@ -20,5 +23,16 @@
   "bugs": {
     "url": "https://github.com/keppelen/react-facebook-login/issues"
   },
-  "homepage": "https://github.com/keppelen/react-facebook-login"
+  "homepage": "https://github.com/keppelen/react-facebook-login",
+  "dependencies": {
+    "node-libs-browser": "^0.5.2",
+    "webpack": "^1.9.10",
+    "webpack-dev-server": "^1.9.0",
+    "jsx-loader": "^0.13.1",
+    "react": "~0.13.2",
+    "react-jsx": "^0.13.0",
+    "react-tools": "^0.13.2",
+    "css-loader": "^0.12.0",
+    "style-loader": "^0.12.1"
+  }
 }

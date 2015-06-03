@@ -1,15 +1,14 @@
 'use strict'
 
 var React = require('react');
+require('./css/style.css');
 
 module.exports = React.createClass({
 
     render: function() {
       return (
         <div>
-          <button
-            className={ this.props.class ? this.props.class : 'facebook-login'}
-            onClick={ this.handleClick }>
+          <button className={ this.props.class ? this.props.class : 'facebook-login'} onClick={ this.handleClick }>
               { this.props.callToAction ? this.props.callToAction : "Login with Facebook"}
           </button>
           <div id="fb-root"></div>
