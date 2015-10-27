@@ -4,7 +4,7 @@ module.exports = {
   entry: './demo.jsx',
   output: {
     publicPath: 'http://localhost:3000/assets',
-    filename: 'facebook-login.js',
+    filename: 'google-login.js',
     path: './dist'
   },
   module: {

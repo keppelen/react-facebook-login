@@ -1,31 +1,31 @@
-#React Facebook Login
+#React Google Login
 
-> An Component React for Facebook Login
+> A Component React for Google Login
 
 ##Install dependences
 ``` npm install react ```
-``` npm install react-facebook-login --save ```
+``` npm install react-Google-login --save ```
 
 ## How to use
 ```JAVASCRIPT
 'use strict'
 
 var React = require('react'),
-    Facebook = require('react-facebook-login');
+    Google = require('react-Google-login');
 
-// Result response Facebook Login
-var resultFacebookLogin = function( response ) {
+// Result response Google Login
+var resultGoogleLogin = function( response ) {
   console.log( response );
 }
 
 React.render(
-  <Facebook
+  <Google
         appId="1088597931155576"
-        class="facebook-login"
+        class="Google-login"
         scope="public_profile, email, user_birthday"
-        loginHandler={ resultFacebookLogin } />,
+        loginHandler={ resultGoogleLogin } />,
 
-  document.getElementById('facebook-login'))
+  document.getElementById('Google-login'))
 
 ```
 
@@ -34,10 +34,10 @@ React.render(
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Example React Facebook Login</title>
+    <title>Example React Google Login</title>
 </head>
 <body>
-    <div id="facebook-login"></div>
+    <div id="Google-login"></div>
 </body>
 </html>
 
@@ -47,9 +47,9 @@ React.render(
 |    params    |   value  |             default value            |
 |:------------:|:--------:|:------------------------------------:|
 |     appId    |  string  |                  ""                  |
-|     class    |  string  |            facebook-login            |
+|     class    |  string  |            Google-login            |
 |     scope    |  string  | public_profile, email, user_birthday |
-| loginHandler | function |          resultFacebookLogin         |
+| loginHandler | function |          resultGoogleLogin         |
 |   autoLoad   |  boolean |                 false                |
 |     xfbml    |  boolean |                 false                |
-| callToAction |  string  |          Login with Facebook         |
+| callToAction |  string  |          Login with Google         |

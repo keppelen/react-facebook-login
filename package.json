@@ -1,8 +1,8 @@
 {
-  "name": "react-facebook-login",
+  "name": "react-google-login",
   "version": "1.0.5",
   "description": "A Component React for Facebook Login",
-  "main": "dist/facebook-login.js",
+  "main": "dist/google-login.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm install && npm run dev",
@@ -11,19 +11,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/keppelen/react-facebook-login.git"
+    "url": "https://github.com/swamig/react-google-login.git"
   },
   "keywords": [
-    "facebook",
+    "google",
     "react",
     "react-component"
   ],
-  "author": "Giovanni Keppelen <keppelen.as@gmail.com> (http://github.com/keppelen)",
+  "author": "Saumya Garg <SaumyaGarg@gmail.com> (http://github.com/swamig)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/keppelen/react-facebook-login/issues"
+    "url": "https://github.com/swamig/react-google-login/issues"
   },
-  "homepage": "https://github.com/keppelen/react-facebook-login",
+  "homepage": "https://github.com/swamig/react-google-login",
   "dependencies": {
     "node-libs-browser": "^0.5.2",
     "webpack": "^1.9.10",

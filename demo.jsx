@@ -1,18 +1,18 @@
 'use strict'
 
 var React = require('react'),
-    Facebook = require('./facebook');
+    GoogleLogin = require('./google');
 
 // Result response Facebook Login
-var resultFacebookLogin = function( response ) {
+var resultGoogleLogin = function( response ) {
   console.log( response );
 }
 
 React.render(
-  <Facebook
-        appId="1088597931155576"
-        class="facebook-login"
+  <GoogleLogin
+        clientID="307320636222-s8l1hac3lt7nasg18jutf4qnpdetrth0.apps.googleusercontent.com"
+        class="google-login"
         scope="public_profile, email, user_birthday"
-        loginHandler={ resultFacebookLogin } />,
+        loginHandler={ resultGoogleLogin } />,
 
-  document.getElementById('facebook-login'))
+  document.getElementById('google-login'))
