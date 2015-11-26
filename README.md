@@ -1,55 +1,78 @@
-#React Facebook Login
+# React Facebook Login
 
 > An Component React for Facebook Login
 
-##Install dependences
-``` npm install react ```
-``` npm install react-facebook-login --save ```
+## Install dependences
+```shell
+npm install react --save
+npm install react-dom --save
+```
+
+```shell
+npm install react-facebook-login --save
+```
 
 ## How to use
-```JAVASCRIPT
-'use strict'
 
-var React = require('react'),
-    Facebook = require('react-facebook-login');
+### Client
+```js
+'use strict';
 
-// Result response Facebook Login
-var resultFacebookLogin = function( response ) {
-  console.log( response );
+import React from 'react';
+import ReactDOM from 'react-dom';
+import FacebookLogin from 'react-facebook-login';
+
+const responseFacebook = (response) => {
+  console.log(response);
 }
 
-React.render(
-  <Facebook
+ReactDOM.render(
+  <FacebookLogin
+    appId="1088597931155576"
+    autoLoad={true}
+    callback={responseFacebook} />,
+  document.getElementById('demo')
+);
+```
+
+### Server
+```js
+'use strict';
+
+import React from 'react';
+import FacebookLogin from 'react-facebook-login';
+
+class MyComponent extends React.Component {
+  constructor(props) {
+      super(props);
+  };
+
+  responseFacebook = (response) => {
+    console.log(response);
+  };
+
+  render() {
+    return (
+      <FacebookLogin
         appId="1088597931155576"
-        class="facebook-login"
-        scope="public_profile, email, user_birthday"
-        loginHandler={ resultFacebookLogin } />,
+        autoLoad={true}
+        callback={responseFacebook} />
+    )
+  }
+}
 
-  document.getElementById('facebook-login'))
-
+export default MyComponent;
 ```
 
-```HTML
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Example React Facebook Login</title>
-</head>
-<body>
-    <div id="facebook-login"></div>
-</body>
-</html>
+## Parameters
 
-```
-
-##Parameters
 |    params    |   value  |             default value            |
 |:------------:|:--------:|:------------------------------------:|
-|     appId    |  string  |                  ""                  |
-|     class    |  string  |            facebook-login            |
+|     appId    |  string  |              Required                |
+|     size     |  string  |        small - medium - metro        |
 |     scope    |  string  | public_profile, email, user_birthday |
-| loginHandler | function |          resultFacebookLogin         |
+|   callback   | function |          resultFacebookLogin         |
 |   autoLoad   |  boolean |                 false                |
 |     xfbml    |  boolean |                 false                |
-| callToAction |  string  |          Login with Facebook         |
+|   textButton |  string  |          Login Facebook              |

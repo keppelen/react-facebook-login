@@ -1,29 +1,36 @@
-var webpack = require("webpack");
+'use strict';
+
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
-  entry: './demo.jsx',
-  output: {
-    publicPath: 'http://localhost:3000/assets',
-    filename: 'facebook-login.js',
-    path: './dist'
+
+  devtool: 'eval',
+
+  entry: {
+    demo: ['webpack/hot/dev-server', './demo/index.js']
   },
+
   module: {
     loaders: [
-      {
-        test: /\.jsx$/,
-        loader: 'jsx-loader?insertPragma=React.DOM&harmony',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
-      }
+      { test: /\.js$/, loader: 'babel?stage=0', exclude: /node_modules/ },
+      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass'}
     ]
   },
-  externals: {
-    'react': 'React'
+
+  output: {
+    filename: 'demo/bundle.js'
   },
+
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js'],
+  },
+
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
+
+  devServer: {
+    contentBase: './demo'
   }
-}
+};

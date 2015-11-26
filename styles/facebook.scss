@@ -1,0 +1,51 @@
+$font-family-default: 'Helvetica', sans-serif;
+
+@function calc-responsive($value1, $width1, $value2, $width2) {
+  $x1: $width1;
+  $x2: $width2;
+  $y1: $value1;
+  $y2: $value2;
+  $a: ($y2 - $y1) / ($x2 - $x1);
+  $b: ($x2 * $y1 - $x1 * $y2) / ($x2 - $x1);
+  @return calc(#{$a*100vw} + #{$b*1px});
+}
+
+%button {
+  font-family: $font-family-default;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  border-width: 2px;
+  border-style: solid;
+  color: #FFF;
+  cursor: pointer;
+  display: inline-block;
+  font-size: calc-responsive(12, 768, 18, 1920);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color .3s, border-color .3s;
+  background-color: #4C69BA;
+  border-color: #4C69BA;
+}
+
+.small {
+  @extend %button;
+  padding: 1.2em 3em;
+
+  @media (min-width: 768px) {
+    padding: 0.9em 2.2em;
+  }
+}
+
+.medium {
+  @extend %button;
+  padding: 1.2em 3em;
+
+  @media (min-width: 768px) {
+    padding: 1.6em 2.4em;
+  }
+}
+
+.metro {
+  @extend %button;
+  border-radius: 0;
+}
