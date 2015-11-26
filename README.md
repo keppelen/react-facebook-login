@@ -2,15 +2,18 @@
 
 > An Component React for Facebook Login
 
-## Install dependences
+## Getting Started
 ```shell
-npm install react --save
-npm install react-dom --save
+git clone https://github.com/keppelen/react-facebook-login.git && cd react-facebook-login
+npm install react react-dom react-facebook-login --save
 ```
 
+## Development
 ```shell
-npm install react-facebook-login --save
+npm start
 ```
+
+- open yuor browser in [localhost:8080](http://localhost:8080)
 
 ## How to use
 
