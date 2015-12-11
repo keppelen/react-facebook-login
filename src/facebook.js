@@ -1,13 +1,7 @@
-'use strict';
-
-import React, {Component, PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import styles from '../styles/facebook.scss';
 
 class FacebookLogin extends React.Component {
-
-  constructor(props) {
-      super(props);
-  };
 
   static propTypes = {
     callback: PropTypes.func.isRequired,
@@ -16,38 +10,44 @@ class FacebookLogin extends React.Component {
     scope: PropTypes.string,
     textButton: PropTypes.string,
     autoLoad: PropTypes.bool,
-    size: PropTypes.string
+    size: PropTypes.string,
   };
 
   static defaultProps = {
     textButton: 'Login with Facebook',
     scope: 'public_profile, email, user_birthday',
     xfbml: false,
-    size: 'medium'
+    size: 'medium',
   };
 
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = () => {
       FB.init({
-        appId      : this.props.appId,
-        xfbml      : this.props.xfbml,
-        version    : 'v2.3'
+        appId: this.props.appId,
+        xfbml: this.props.xfbml,
+        version: 'v2.3',
       });
 
       if (this.props.autoLoad) {
         FB.getLoginStatus(this.checkLoginState);
       }
-    }.bind(this);
+    };
 
     // Load the SDK asynchronously
-    (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-  };
+    ((d, s, id) => {
+      const element = d.getElementsByTagName(s)[0];
+      const fjs = element;
+      let js = element;
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = '//connect.facebook.net/en_US/sdk.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }
 
   responseApi = (authResponse) => {
     FB.api('/me', (me) => {
@@ -61,13 +61,13 @@ class FacebookLogin extends React.Component {
       this.responseApi(response.authResponse);
     } else {
       if (this.props.callback) {
-        this.props.callback({ status: response.status});
+        this.props.callback({ status: response.status });
       }
     }
   };
 
   click = () => {
-    FB.login(this.checkLoginState, {scope: this.props.scope});
+    FB.login(this.checkLoginState, { scope: this.props.scope });
   };
 
   render() {
@@ -76,10 +76,10 @@ class FacebookLogin extends React.Component {
         <button className={this.props.size} onClick={this.click}>
             {this.props.textButton}
         </button>
-        <style dangerouslySetInnerHTML={{__html: styles}}></style>
+        <style dangerouslySetInnerHTML={{ __html: styles }}></style>
         <div id="fb-root"></div>
       </div>
-    )
+    );
   }
 }
 
