@@ -27,7 +27,7 @@ $font-family-default: 'Helvetica', sans-serif;
   border-color: #4C69BA;
 }
 
-.small {
+.kep-login-facebook-small {
   @extend %button;
   padding: 1.2em 3em;
 
@@ -36,7 +36,7 @@ $font-family-default: 'Helvetica', sans-serif;
   }
 }
 
-.medium {
+.kep-login-facebook-medium {
   @extend %button;
   padding: 1.2em 3em;
 
@@ -45,7 +45,7 @@ $font-family-default: 'Helvetica', sans-serif;
   }
 }
 
-.metro {
+.kep-login-facebook-metro {
   @extend %button;
   border-radius: 0;
 }

@@ -73,7 +73,7 @@ class FacebookLogin extends React.Component {
   render() {
     return (
       <div>
-        <button className={this.props.size} onClick={this.click}>
+        <button className={'kep-login-facebook kep-login-facebook-' + this.props.size} onClick={this.click}>
             {this.props.textButton}
         </button>
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
