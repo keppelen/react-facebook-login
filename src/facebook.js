@@ -11,6 +11,7 @@ class FacebookLogin extends React.Component {
     textButton: PropTypes.string,
     autoLoad: PropTypes.bool,
     size: PropTypes.string,
+    fields: PropTypes.string,
   };
 
   static defaultProps = {
@@ -18,6 +19,7 @@ class FacebookLogin extends React.Component {
     scope: 'public_profile, email, user_birthday',
     xfbml: false,
     size: 'medium',
+    fields: 'name',
   };
 
   constructor(props) {
@@ -50,7 +52,7 @@ class FacebookLogin extends React.Component {
   }
 
   responseApi = (authResponse) => {
-    FB.api('/me', (me) => {
+    FB.api('/me', {fields: this.props.fields }, (me) => {
       me.accessToken = authResponse.accessToken;
       this.props.callback(me);
     });
