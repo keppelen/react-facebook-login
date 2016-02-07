@@ -52,7 +52,7 @@ class FacebookLogin extends React.Component {
   }
 
   responseApi = (authResponse) => {
-    FB.api('/me', {fields: this.props.fields }, (me) => {
+    FB.api('/me', { fields: this.props.fields }, (me) => {
       me.accessToken = authResponse.accessToken;
       this.props.callback(me);
     });
