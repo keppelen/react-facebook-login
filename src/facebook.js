@@ -16,7 +16,7 @@ class FacebookLogin extends React.Component {
 
   static defaultProps = {
     textButton: 'Login with Facebook',
-    scope: 'public_profile, email, user_birthday',
+    scope: 'public_profile, email',
     xfbml: false,
     size: 'medium',
     fields: 'name',
