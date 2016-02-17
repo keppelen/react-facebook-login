@@ -12,6 +12,9 @@ class FacebookLogin extends React.Component {
     autoLoad: PropTypes.bool,
     size: PropTypes.string,
     fields: PropTypes.string,
+    cssClass: PropTypes.string,
+    version: PropTypes.string,
+    icon: PropTypes.string,
   };
 
   static defaultProps = {
@@ -20,6 +23,8 @@ class FacebookLogin extends React.Component {
     xfbml: false,
     size: 'medium',
     fields: 'name',
+    cssClass: 'kep-login-facebook kep-login-facebook-',
+    version: '2.3'
   };
 
   constructor(props) {
@@ -31,7 +36,7 @@ class FacebookLogin extends React.Component {
       FB.init({
         appId: this.props.appId,
         xfbml: this.props.xfbml,
-        version: 'v2.3',
+        version: 'v' + this.props.version,
       });
 
       if (this.props.autoLoad) {
@@ -73,11 +78,28 @@ class FacebookLogin extends React.Component {
   };
 
   render() {
+    let innerButton = null;
+    let buttonClass = null;
+
+    if (this.props.cssClass !== 'kep-login-facebook kep-login-facebook-') {
+      buttonClass = this.props.cssClass;
+    } else {
+      buttonClass = this.props.cssClass + this.props.size;
+    }
+
+    if (this.props.icon) {
+      innerButton = '<i class="fa ' + this.props.icon + '"></i>';
+      innerButton += this.props.textButton;
+    } else {
+      innerButton = this.props.textButton;
+    }
+
     return (
       <div>
-        <button className={'kep-login-facebook kep-login-facebook-' + this.props.size} onClick={this.click}>
-            {this.props.textButton}
-        </button>
+        <button
+          className={buttonClass}
+          onClick={this.click}
+          dangerouslySetInnerHTML={{ __html: innerButton }}></button>
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
         <div id="fb-root"></div>
       </div>
