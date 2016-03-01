@@ -13,11 +13,11 @@ npm install react react-dom react-facebook-login --save
 npm start
 ```
 
-- open yuor browser in [localhost:8080](http://localhost:8080)
+- navigate to [localhost:8080](http://localhost:8080)
 
 ## How to use
 
-### Client
+### Basic
 ```js
 'use strict';
 
@@ -34,6 +34,29 @@ ReactDOM.render(
     appId="1088597931155576"
     autoLoad={true}
     callback={responseFacebook} />,
+  document.getElementById('demo')
+);
+```
+
+### Custom CSS Class and Icon
+```js
+'use strict';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import FacebookLogin from 'react-facebook-login';
+
+const responseFacebook = (response) => {
+  console.log(response);
+}
+
+ReactDOM.render(
+  <FacebookLogin
+    appId="1088597931155576"
+    autoLoad={true}
+    callback={responseFacebook}
+    cssClass="my-facebook-button-class"
+    icon="fa-facebook" />,
   document.getElementById('demo')
 );
 ```
@@ -78,4 +101,7 @@ export default MyComponent;
 |   callback   | function |          resultFacebookLogin         |
 |   autoLoad   |  boolean |                 false                |
 |     xfbml    |  boolean |                 false                |
-|   textButton |  string  |          Login Facebook              |
+|   textButton |  string  |          Login with Facebook         |
+|   cssClass   |  string  | kep-login-facebook kep-login-facebook-[button-size]|
+|   version    |  string  |                  2.3                 |
+|   icon       |  string  |                  none                |
