@@ -1,6 +1,6 @@
 # React Facebook Login
 
-> An Component React for Facebook Login
+> A Component React for Facebook Login
 
 ## Getting Started
 ```shell
