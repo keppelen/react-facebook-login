@@ -24,7 +24,7 @@ class FacebookLogin extends React.Component {
     size: 'medium',
     fields: 'name',
     cssClass: 'kep-login-facebook kep-login-facebook-',
-    version: '2.3'
+    version: '2.3',
   };
 
   constructor(props) {
@@ -99,7 +99,8 @@ class FacebookLogin extends React.Component {
         <button
           className={buttonClass}
           onClick={this.click}
-          dangerouslySetInnerHTML={{ __html: innerButton }}></button>
+          dangerouslySetInnerHTML={{ __html: innerButton }}
+        ></button>
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
         <div id="fb-root"></div>
       </div>
