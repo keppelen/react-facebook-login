@@ -7,6 +7,7 @@ class FacebookLogin extends React.Component {
     callback: PropTypes.func.isRequired,
     appId: PropTypes.string.isRequired,
     xfbml: PropTypes.bool,
+    cookie: PropTypes.bool,
     scope: PropTypes.string,
     textButton: PropTypes.string,
     autoLoad: PropTypes.bool,
@@ -21,6 +22,7 @@ class FacebookLogin extends React.Component {
     textButton: 'Login with Facebook',
     scope: 'public_profile, email',
     xfbml: false,
+    cookie: false,
     size: 'medium',
     fields: 'name',
     cssClass: 'kep-login-facebook kep-login-facebook-',
@@ -36,6 +38,7 @@ class FacebookLogin extends React.Component {
       FB.init({
         appId: this.props.appId,
         xfbml: this.props.xfbml,
+        cookie: this.props.cookie,
         version: 'v' + this.props.version,
       });
 
