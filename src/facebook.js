@@ -24,9 +24,9 @@ class FacebookLogin extends React.Component {
     scope: 'public_profile, email',
     xfbml: false,
     cookie: false,
-    size: 'medium',
+    size: 'metro',
     fields: 'name',
-    cssClass: 'kep-login-facebook kep-login-facebook-',
+    cssClass: 'kep-login-facebook',
     version: '2.3',
     language: 'en_US',
   };
@@ -82,30 +82,35 @@ class FacebookLogin extends React.Component {
     FB.login(this.checkLoginState, { scope: this.props.scope });
   };
 
+  renderWithFontAwesome() {
+    return (
+      <div>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+         <button
+            className={this.props.cssClass + ' ' + this.props.size}
+            onClick={this.click}>
+          <i className={'fa ' + this.props.icon}></i> {this.props.textButton}
+        </button>
+
+        <style dangerouslySetInnerHTML={{ __html: styles }}></style>
+        <div id="fb-root"></div>
+      </div>
+    )
+  }
+
   render() {
-    let innerButton = null;
-    let buttonClass = null;
-
-    if (this.props.cssClass !== 'kep-login-facebook kep-login-facebook-') {
-      buttonClass = this.props.cssClass;
-    } else {
-      buttonClass = this.props.cssClass + this.props.size;
-    }
-
     if (this.props.icon) {
-      innerButton = '<i class="fa ' + this.props.icon + '"></i>';
-      innerButton += this.props.textButton;
-    } else {
-      innerButton = this.props.textButton;
+      return this.renderWithFontAwesome();
     }
 
     return (
       <div>
         <button
-          className={buttonClass}
-          onClick={this.click}
-          dangerouslySetInnerHTML={{ __html: innerButton }}
-        ></button>
+            className={this.props.cssClass + ' ' + this.props.size}
+            onClick={this.click}>
+          {this.props.textButton}
+        </button>
+        
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
         <div id="fb-root"></div>
       </div>
