@@ -105,3 +105,4 @@ export default MyComponent;
 |   cssClass   |  string  | kep-login-facebook kep-login-facebook-[button-size]|
 |   version    |  string  |                  2.3                 |
 |   icon       |  string  |                  none                |
+|   language   |  string  |                  en_US               |

@@ -15,6 +15,7 @@ class FacebookLogin extends React.Component {
     cssClass: PropTypes.string,
     version: PropTypes.string,
     icon: PropTypes.string,
+    language: PropTypes.string,
   };
 
   static defaultProps = {
@@ -24,7 +25,8 @@ class FacebookLogin extends React.Component {
     size: 'medium',
     fields: 'name',
     cssClass: 'kep-login-facebook kep-login-facebook-',
-    version: '2.3'
+    version: '2.3',
+    language: 'en_US',
   };
 
   constructor(props) {
@@ -51,7 +53,7 @@ class FacebookLogin extends React.Component {
       let js = element;
       if (d.getElementById(id)) {return;}
       js = d.createElement(s); js.id = id;
-      js.src = '//connect.facebook.net/en_US/sdk.js';
+      js.src = '//connect.facebook.net/' + this.props.language + '/sdk.js';
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   }
@@ -99,7 +101,8 @@ class FacebookLogin extends React.Component {
         <button
           className={buttonClass}
           onClick={this.click}
-          dangerouslySetInnerHTML={{ __html: innerButton }}></button>
+          dangerouslySetInnerHTML={{ __html: innerButton }}
+        ></button>
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
         <div id="fb-root"></div>
       </div>
