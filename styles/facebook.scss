@@ -14,38 +14,37 @@ $font-family-default: 'Helvetica', sans-serif;
   font-family: $font-family-default;
   font-weight: bold;
   -webkit-font-smoothing: antialiased;
-  border-width: 2px;
+  border-width: calc-responsive(1, 468, 2, 1920);
   border-style: solid;
   color: #FFF;
   cursor: pointer;
   display: inline-block;
-  font-size: calc-responsive(12, 768, 18, 1920);
+  font-size: calc-responsive(14, 468, 18, 1920);
   text-decoration: none;
   text-transform: uppercase;
   transition: background-color .3s, border-color .3s;
   background-color: #4C69BA;
   border-color: #4C69BA;
+  padding: calc-responsive(15, 468, 20, 1920) calc-responsive(20, 468, 25, 1920);
 }
 
-.kep-login-facebook-small {
+.kep-login-facebook {
   @extend %button;
-  padding: 1.2em 3em;
 
-  @media (min-width: 768px) {
-    padding: 0.9em 2.2em;
+  &.small {
+    padding: calc-responsive(5, 468, 10, 1920) calc-responsive(10, 468, 15, 1920);
   }
-}
 
-.kep-login-facebook-medium {
-  @extend %button;
-  padding: 1.2em 3em;
-
-  @media (min-width: 768px) {
-    padding: 1.6em 2.4em;
+  &.medium {
+    padding: calc-responsive(10, 468, 15, 1920) calc-responsive(15, 468, 20, 1920);
   }
-}
 
-.kep-login-facebook-metro {
-  @extend %button;
-  border-radius: 0;
+  &.metro {
+    border-radius: 0;
+  }
+
+  .fa {
+    margin-right: calc-responsive(5, 468, 10, 1920);
+  }
+  
 }

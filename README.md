@@ -1,6 +1,6 @@
 # React Facebook Login
 
-> An Component React for Facebook Login
+> A Component React for Facebook Login
 
 ## Getting Started
 ```shell
@@ -105,3 +105,4 @@ export default MyComponent;
 |   cssClass   |  string  | kep-login-facebook kep-login-facebook-[button-size]|
 |   version    |  string  |                  2.3                 |
 |   icon       |  string  |                  none                |
+|   language   |  string  |                  en_US               |

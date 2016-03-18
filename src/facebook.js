@@ -7,6 +7,7 @@ class FacebookLogin extends React.Component {
     callback: PropTypes.func.isRequired,
     appId: PropTypes.string.isRequired,
     xfbml: PropTypes.bool,
+    cookie: PropTypes.bool,
     scope: PropTypes.string,
     textButton: PropTypes.string,
     autoLoad: PropTypes.bool,
@@ -15,16 +16,19 @@ class FacebookLogin extends React.Component {
     cssClass: PropTypes.string,
     version: PropTypes.string,
     icon: PropTypes.string,
+    language: PropTypes.string,
   };
 
   static defaultProps = {
     textButton: 'Login with Facebook',
     scope: 'public_profile, email',
     xfbml: false,
-    size: 'medium',
+    cookie: false,
+    size: 'metro',
     fields: 'name',
-    cssClass: 'kep-login-facebook kep-login-facebook-',
-    version: '2.3'
+    cssClass: 'kep-login-facebook',
+    version: '2.3',
+    language: 'en_US',
   };
 
   constructor(props) {
@@ -41,6 +45,7 @@ class FacebookLogin extends React.Component {
       FB.init({
         appId: this.props.appId,
         xfbml: this.props.xfbml,
+        cookie: this.props.cookie,
         version: 'v' + this.props.version,
       });
 
@@ -56,7 +61,7 @@ class FacebookLogin extends React.Component {
       let js = element;
       if (d.getElementById(id)) {return;}
       js = d.createElement(s); js.id = id;
-      js.src = '//connect.facebook.net/en_US/sdk.js';
+      js.src = '//connect.facebook.net/' + this.props.language + '/sdk.js';
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   }
@@ -82,29 +87,34 @@ class FacebookLogin extends React.Component {
     FB.login(this.checkLoginState, { scope: this.props.scope });
   };
 
+  renderWithFontAwesome() {
+    return (
+      <div>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+         <button
+            className={this.props.cssClass + ' ' + this.props.size}
+            onClick={this.click}>
+          <i className={'fa ' + this.props.icon}></i> {this.props.textButton}
+        </button>
+
+        <style dangerouslySetInnerHTML={{ __html: styles }}></style>
+      </div>
+    )
+  }
+
   render() {
-    let innerButton = null;
-    let buttonClass = null;
-
-    if (this.props.cssClass !== 'kep-login-facebook kep-login-facebook-') {
-      buttonClass = this.props.cssClass;
-    } else {
-      buttonClass = this.props.cssClass + this.props.size;
-    }
-
     if (this.props.icon) {
-      innerButton = '<i class="fa ' + this.props.icon + '"></i>';
-      innerButton += this.props.textButton;
-    } else {
-      innerButton = this.props.textButton;
+      return this.renderWithFontAwesome();
     }
 
     return (
       <div>
         <button
-          className={buttonClass}
-          onClick={this.click}
-          dangerouslySetInnerHTML={{ __html: innerButton }}></button>
+            className={this.props.cssClass + ' ' + this.props.size}
+            onClick={this.click}>
+          {this.props.textButton}
+        </button>
+        
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
       </div>
     );

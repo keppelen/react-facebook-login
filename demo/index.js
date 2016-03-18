@@ -13,7 +13,6 @@ ReactDOM.render(
     appId="1088597931155576"
     autoLoad={true}
     callback={responseFacebook}
-    cssClass="my-facebook-button-class"
     icon="fa-facebook" />,
   document.getElementById('demo')
 );
