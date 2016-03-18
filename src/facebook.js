@@ -32,6 +32,11 @@ class FacebookLogin extends React.Component {
   }
 
   componentDidMount() {
+    let fbRoot = document.createElement('div');
+        fbRoot.id = 'fb-root';
+
+    document.body.appendChild(fbRoot);
+
     window.fbAsyncInit = () => {
       FB.init({
         appId: this.props.appId,
@@ -101,7 +106,6 @@ class FacebookLogin extends React.Component {
           onClick={this.click}
           dangerouslySetInnerHTML={{ __html: innerButton }}></button>
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
-        <div id="fb-root"></div>
       </div>
     );
   }
