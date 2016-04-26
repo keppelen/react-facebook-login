@@ -1,7 +1,27 @@
 import React, { PropTypes } from 'react';
 import styles from '../styles/facebook.scss';
 
-class FacebookLogin extends React.Component {
+export class FacebookLogout extends React.Component {
+  static propTypes = {
+    callback: PropTypes.func.isRequired,
+  };
+  click = () => {
+    var that = this
+    FB.logout(function(response) {
+      that.props.callback();
+    });
+  };
+  render() {
+    return (
+      <button onClick={this.click}>
+        Logout
+      </button>
+    )
+  }
+};
+
+
+export class FacebookLogin extends React.Component {
 
   static propTypes = {
     callback: PropTypes.func.isRequired,
@@ -120,5 +140,3 @@ class FacebookLogin extends React.Component {
     );
   }
 }
-
-export default FacebookLogin;
