@@ -2,17 +2,31 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FacebookLogin from '../src/facebook';
+import {FacebookLogin, FacebookLogout} from '../src/facebook';
 
-const responseFacebook = (response) => {
-  console.log(response);
-}
+var App = React.createClass({
+  getInitialState: function() {
+    return {
+      logged_in: false
+    };
+  },
+  render: function() {
+    var button = this.state.logged_in ? <FacebookLogout callback={this.onLogout}/> :
+      <FacebookLogin
+      appId="1003641623050851"
+      autoLoad={false}
+      callback={this.onLogin}
+      icon="fa-facebook" />;
+    return (
+      <div>{button}</div>
+    );
+  },
+  onLogout: function (){
+    this.setState({ logged_in: false });
+  },
+  onLogin: function (){
+    this.setState({ logged_in: true });
+  }
+});
 
-ReactDOM.render(
-  <FacebookLogin
-    appId="1088597931155576"
-    autoLoad={true}
-    callback={responseFacebook}
-    icon="fa-facebook" />,
-  document.getElementById('demo')
-);
+ReactDOM.render(<App />, document.getElementById('demo'));
