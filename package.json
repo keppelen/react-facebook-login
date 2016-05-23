@@ -4,8 +4,8 @@
   "description": "A Component React for Facebook Login",
   "main": "dist/facebook-login.js",
   "scripts": {
-    "start": "webpack-dev-server --config webpack.config.js",
-    "bundle": "webpack -p --config webpack.config.dist.js",
+    "start": "node_modules/.bin/webpack-dev-server --config webpack.config.js",
+    "bundle": "node_modules/.bin/webpack -p --config webpack.config.dist.js",
     "test": "node_modules/.bin/eslint src/**/*.js"
   },
   "repository": {
