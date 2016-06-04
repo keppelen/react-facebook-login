@@ -16,6 +16,8 @@ class FacebookLogin extends React.Component {
     version: PropTypes.string,
     icon: PropTypes.string,
     language: PropTypes.string,
+    loggedInText: PropTypes.string,
+    loggedOutText: PropTypes.string
   };
 
   static defaultProps = {
@@ -27,12 +29,14 @@ class FacebookLogin extends React.Component {
     cssClass: 'kep-login-facebook',
     version: '2.3',
     language: 'en_US',
+    loggedInText: 'Log out', 
+    loggedOutText: 'Login with Facebook'
   };
 
   constructor(props) {
     super(props);
     this.state = {
-        textButton: 'Login with Facebook',
+        textButton: this.props.loggedOutText,
         loggedIn: false
     };
   }
@@ -91,13 +95,13 @@ class FacebookLogin extends React.Component {
         // user is logged out
       });
       this.setState({
-        textButton: 'Login with Facebook',
+        textButton: this.props.loggedOutText,
         loggedIn: false
       });
     } else {
       FB.login(this.checkLoginState, { scope: this.props.scope });
       this.setState({
-        textButton: 'Log out',
+        textButton: this.props.loggedInText,
         loggedIn: true
       });
     }
