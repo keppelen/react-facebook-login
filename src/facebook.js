@@ -87,6 +87,14 @@ class FacebookLogin extends React.Component {
     FB.login(this.checkLoginState, { scope: this.props.scope });
   };
 
+  renderWithCustomDom() {
+    return (
+      <div onClick={this.click}>
+        {this.props.children}
+      </div>
+    );
+  }
+
   renderWithFontAwesome() {
     return (
       <div>
@@ -105,6 +113,10 @@ class FacebookLogin extends React.Component {
   render() {
     if (this.props.icon) {
       return this.renderWithFontAwesome();
+    }
+
+    if (this.props.children) {
+      return this.renderWithCustomDom();
     }
 
     return (
