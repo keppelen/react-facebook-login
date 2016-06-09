@@ -33,6 +33,7 @@ ReactDOM.render(
   <FacebookLogin
     appId="1088597931155576"
     autoLoad={true}
+    fields="name,email,picture"
     callback={responseFacebook} />,
   document.getElementById('demo')
 );
@@ -54,6 +55,7 @@ ReactDOM.render(
   <FacebookLogin
     appId="1088597931155576"
     autoLoad={true}
+    fields="name,email,picture"
     callback={responseFacebook}
     cssClass="my-facebook-button-class"
     icon="fa-facebook" />,
@@ -82,6 +84,7 @@ class MyComponent extends React.Component {
       <FacebookLogin
         appId="1088597931155576"
         autoLoad={true}
+        fields="name,email,picture"
         callback={responseFacebook} />
     )
   }
@@ -98,6 +101,7 @@ export default MyComponent;
 |     appId    |  string  |              Required                |
 |     size     |  string  |        small - medium - metro        |
 |     scope    |  string  | public_profile, email, user_birthday |
+|     fields   |  string  |         name,email,picture           |
 |   callback   | function |          resultFacebookLogin         |
 |   autoLoad   |  boolean |                 false                |
 |     xfbml    |  boolean |                 false                |
