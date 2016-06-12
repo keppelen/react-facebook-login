@@ -9,7 +9,6 @@ class FacebookLogin extends React.Component {
     xfbml: PropTypes.bool,
     cookie: PropTypes.bool,
     scope: PropTypes.string,
-    textButton: PropTypes.string,
     autoLoad: PropTypes.bool,
     size: PropTypes.string,
     fields: PropTypes.string,
@@ -17,10 +16,11 @@ class FacebookLogin extends React.Component {
     version: PropTypes.string,
     icon: PropTypes.string,
     language: PropTypes.string,
+    loggedInText: PropTypes.string,
+    loggedOutText: PropTypes.string
   };
 
   static defaultProps = {
-    textButton: 'Login with Facebook',
     scope: 'public_profile, email',
     xfbml: false,
     cookie: false,
@@ -29,10 +29,16 @@ class FacebookLogin extends React.Component {
     cssClass: 'kep-login-facebook',
     version: '2.3',
     language: 'en_US',
+    loggedInText: 'Log out', 
+    loggedOutText: 'Login with Facebook'
   };
 
   constructor(props) {
     super(props);
+    this.state = {
+        textButton: this.props.loggedOutText,
+        loggedIn: false
+    };
   }
 
   componentDidMount() {
@@ -84,7 +90,21 @@ class FacebookLogin extends React.Component {
   };
 
   click = () => {
-    FB.login(this.checkLoginState, { scope: this.props.scope });
+    if (this.state.loggedIn) {
+      FB.logout(function(response) {
+        // user is logged out
+      });
+      this.setState({
+        textButton: this.props.loggedOutText,
+        loggedIn: false
+      });
+    } else {
+      FB.login(this.checkLoginState, { scope: this.props.scope });
+      this.setState({
+        textButton: this.props.loggedInText,
+        loggedIn: true
+      });
+    }
   };
 
   renderWithFontAwesome() {
@@ -94,7 +114,7 @@ class FacebookLogin extends React.Component {
          <button
             className={this.props.cssClass + ' ' + this.props.size}
             onClick={this.click}>
-          <i className={'fa ' + this.props.icon}></i> {this.props.textButton}
+          <i className={'fa ' + this.props.icon}></i> {this.state.textButton}
         </button>
 
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
@@ -112,7 +132,7 @@ class FacebookLogin extends React.Component {
         <button
             className={this.props.cssClass + ' ' + this.props.size}
             onClick={this.click}>
-          {this.props.textButton}
+          {this.state.textButton}
         </button>
 
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
@@ -122,3 +142,4 @@ class FacebookLogin extends React.Component {
 }
 
 export default FacebookLogin;
+
