@@ -21,7 +21,7 @@ class FacebookLogin extends React.Component {
 
   static defaultProps = {
     textButton: 'Login with Facebook',
-    scope: 'public_profile, email',
+    scope: 'public_profile,email',
     xfbml: false,
     cookie: false,
     size: 'metro',
@@ -43,15 +43,15 @@ class FacebookLogin extends React.Component {
     document.body.appendChild(fbRoot);
 
     window.fbAsyncInit = () => {
-      FB.init({
+      window.FB.init({
         version: `v${version}`,
         appId,
         xfbml,
         cookie,
       });
 
-      if (autoLoad) {
-        FB.getLoginStatus(this.checkLoginState);
+      if (autoLoad || window.location.search.includes('facebookdirect')) {
+        window.FB.getLoginStatus(this.checkLoginState);
       }
     };
     // Load the SDK asynchronously
@@ -67,7 +67,7 @@ class FacebookLogin extends React.Component {
   }
 
   responseApi = (authResponse) => {
-    FB.api('/me', { fields: this.props.fields }, (me) => {
+    window.FB.api('/me', { fields: this.props.fields }, (me) => {
       Object.assign(me, authResponse);
       this.props.callback(me);
     });
@@ -84,7 +84,12 @@ class FacebookLogin extends React.Component {
   };
 
   click = () => {
-    FB.login(this.checkLoginState, { scope: this.props.scope });
+    const { scope, appId } = this.props;
+    if (navigator.userAgent.match('CriOS')) {
+      window.location.href = `https://www.facebook.com/dialog/oauth?client_id=${appId}&redirect_uri=${window.location.href}&state=facebookdirect&${scope}`;
+    } else {
+      window.FB.login(this.checkLoginState, { scope });
+    }
   };
 
   renderWithFontAwesome() {
