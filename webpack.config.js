@@ -8,13 +8,13 @@ module.exports = {
   devtool: 'eval',
 
   entry: {
-    demo: ['webpack/hot/dev-server', './demo/index.js']
+    demo: ['webpack/hot/dev-server', './demo/index.js'],
   },
 
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel?stage=0', exclude: /node_modules/ },
-      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass'}
+      { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
+      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass'},
     ]
   },
 
