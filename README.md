@@ -19,8 +19,6 @@ npm start
 
 ### Basic
 ```js
-'use strict';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import FacebookLogin from 'react-facebook-login';
@@ -41,7 +39,6 @@ ReactDOM.render(
 
 ### Custom CSS Class and Icon
 ```js
-'use strict';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -58,7 +55,8 @@ ReactDOM.render(
     fields="name,email,picture"
     callback={responseFacebook}
     cssClass="my-facebook-button-class"
-    icon="fa-facebook" />,
+    icon="fa-facebook" 
+  />,
   document.getElementById('demo')
 );
 ```
@@ -85,7 +83,8 @@ class MyComponent extends React.Component {
         appId="1088597931155576"
         autoLoad={true}
         fields="name,email,picture"
-        callback={responseFacebook} />
+        callback={responseFacebook} 
+      />
     )
   }
 }

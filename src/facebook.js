@@ -21,7 +21,7 @@ class FacebookLogin extends React.Component {
 
   static defaultProps = {
     textButton: 'Login with Facebook',
-    scope: 'public_profile, email',
+    scope: 'public_profile,email',
     xfbml: false,
     cookie: false,
     size: 'metro',
@@ -36,24 +36,24 @@ class FacebookLogin extends React.Component {
   }
 
   componentDidMount() {
-    let fbRoot = document.createElement('div');
-        fbRoot.id = 'fb-root';
+    const { appId, xfbml, cookie, version, autoLoad, language } = this.props;
+    const fbRoot = document.createElement('div');
+    fbRoot.id = 'fb-root';
 
     document.body.appendChild(fbRoot);
 
     window.fbAsyncInit = () => {
-      FB.init({
-        appId: this.props.appId,
-        xfbml: this.props.xfbml,
-        cookie: this.props.cookie,
-        version: 'v' + this.props.version,
+      window.FB.init({
+        version: `v${version}`,
+        appId,
+        xfbml,
+        cookie,
       });
 
-      if (this.props.autoLoad) {
-        FB.getLoginStatus(this.checkLoginState);
+      if (autoLoad || window.location.search.includes('facebookdirect')) {
+        window.FB.getLoginStatus(this.checkLoginState);
       }
     };
-
     // Load the SDK asynchronously
     ((d, s, id) => {
       const element = d.getElementsByTagName(s)[0];
@@ -61,14 +61,14 @@ class FacebookLogin extends React.Component {
       let js = element;
       if (d.getElementById(id)) {return;}
       js = d.createElement(s); js.id = id;
-      js.src = '//connect.facebook.net/' + this.props.language + '/all.js';
+      js.src = `//connect.facebook.net/${language}/all.js`;
       fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    })(document, 'script', 'facebook-jssdk');
   }
 
   responseApi = (authResponse) => {
-    FB.api('/me', { fields: this.props.fields }, (me) => {
-      Object.assign(me, authResponse)
+    window.FB.api('/me', { fields: this.props.fields }, (me) => {
+      Object.assign(me, authResponse);
       this.props.callback(me);
     });
   };
@@ -84,39 +84,46 @@ class FacebookLogin extends React.Component {
   };
 
   click = () => {
-    FB.login(this.checkLoginState, { scope: this.props.scope });
+    const { scope, appId } = this.props;
+    if (navigator.userAgent.match('CriOS')) {
+      window.location.href = `https://www.facebook.com/dialog/oauth?client_id=${appId}&redirect_uri=${window.location.href}&state=facebookdirect&${scope}`;
+    } else {
+      window.FB.login(this.checkLoginState, { scope });
+    }
   };
 
   renderWithFontAwesome() {
+    const { cssClass, size, icon, textButton } = this.props;
     return (
-      <div>
+      <span>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-         <button
-            className={this.props.cssClass + ' ' + this.props.size}
-            onClick={this.click}>
-          <i className={'fa ' + this.props.icon}></i> {this.props.textButton}
+        <button
+          className={`${cssClass} ${size}`}
+          onClick={this.click}
+        >
+          <i className={`fa ${icon}`}></i> {textButton}
         </button>
-
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
-      </div>
-    )
+      </span>
+    );
   }
 
   render() {
-    if (this.props.icon) {
+    const { cssClass, size, icon, textButton } = this.props;
+    if (icon) {
       return this.renderWithFontAwesome();
     }
 
     return (
-      <div>
+      <span>
         <button
-            className={this.props.cssClass + ' ' + this.props.size}
-            onClick={this.click}>
-          {this.props.textButton}
+          className={`${cssClass} ${size}`}
+          onClick={this.click}
+        >
+          {textButton}
         </button>
-
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
-      </div>
+      </span>
     );
   }
 }
