@@ -4,7 +4,7 @@
   "description": "A Component React for Facebook Login",
   "main": "dist/facebook-login.js",
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --config webpack.config.js --host $IP --port $PORT",
+    "start": "NODE_ENV=development webpack-dev-server --config webpack.config.js",
     "bundle": "NODE_ENV=production webpack -p --config webpack.config.dist.js",
     "test": "node_modules/.bin/eslint src/**/*.js"
   },
@@ -29,7 +29,7 @@
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "autoprefixer": "^6.0.3",
-    
+
     "babel": "^6.5.2",
     "babel-core": "^6.6.5",
     "babel-eslint": "^4.1.6",
