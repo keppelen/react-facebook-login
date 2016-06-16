@@ -103,9 +103,17 @@ class FacebookLogin extends React.Component {
         >
           <i className={`fa ${icon}`}></i> {textButton}
         </button>
-        <style dangerouslySetInnerHTML={{ __html: styles }}></style>
+        { this.style() }
       </span>
     );
+  }
+
+  style() {
+    const defaultCSS = this.constructor.defaultProps.cssClass;
+    if (this.props.cssClass === defaultCSS) {
+      return <style dangerouslySetInnerHTML={{ __html: styles }}></style>
+    }
+    return false;
   }
 
   render() {
@@ -122,7 +130,7 @@ class FacebookLogin extends React.Component {
         >
           {textButton}
         </button>
-        <style dangerouslySetInnerHTML={{ __html: styles }}></style>
+        { this.style() }
       </span>
     );
   }
