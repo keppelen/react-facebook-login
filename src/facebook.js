@@ -95,12 +95,12 @@ class FacebookLogin extends React.Component {
   };
 
   renderWithFontAwesome() {
-    const { cssClass, size, icon, textButton } = this.props;
+    const { cssClass, size, icon, textButton, typeButton } = this.props;
     return (
       <span>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
         <button
-          type={this.props.typeButton}
+          type={typeButton}
           className={`${cssClass} ${size}`}
           onClick={this.click}
         >
