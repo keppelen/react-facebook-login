@@ -18,6 +18,7 @@ class FacebookLogin extends React.Component {
     version: PropTypes.string,
     icon: PropTypes.string,
     language: PropTypes.string,
+    loadFA: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -26,6 +27,7 @@ class FacebookLogin extends React.Component {
     scope: 'public_profile,email',
     xfbml: false,
     cookie: false,
+    loadFA: true,
     size: 'metro',
     fields: 'name',
     cssClass: 'kep-login-facebook',
@@ -95,10 +97,11 @@ class FacebookLogin extends React.Component {
   };
 
   renderWithFontAwesome() {
-    const { cssClass, size, icon, textButton, typeButton } = this.props;
+    const { cssClass, size, icon, textButton, typeButton, loadFA } = this.props;
+    const fontAwesomeLoad = loadFA ? <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" /> : null;
     return (
       <span>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+        {fontAwesomeLoad}
         <button
           type={typeButton}
           className={`${cssClass} ${size}`}
