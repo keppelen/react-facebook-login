@@ -18,6 +18,7 @@ class FacebookLogin extends React.Component {
     version: PropTypes.string,
     icon: PropTypes.string,
     language: PropTypes.string,
+    onClick: PropTypes.func,
   };
 
   static defaultProps = {
@@ -86,7 +87,12 @@ class FacebookLogin extends React.Component {
   };
 
   click = () => {
-    const { scope, appId } = this.props;
+    const { scope, appId, onClick } = this.props;
+
+    if (typeof onClick === 'function') {
+      onClick();
+    }
+
     if (navigator.userAgent.match('CriOS')) {
       window.location.href = `https://www.facebook.com/dialog/oauth?client_id=${appId}&redirect_uri=${window.location.href}&state=facebookdirect&${scope}`;
     } else {
