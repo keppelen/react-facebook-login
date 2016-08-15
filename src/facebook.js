@@ -18,6 +18,8 @@ class FacebookLogin extends React.Component {
     version: PropTypes.string,
     icon: PropTypes.string,
     language: PropTypes.string,
+    style: PropTypes.object,
+    styleButton: PropTypes.object
   };
 
   static defaultProps = {
@@ -31,6 +33,8 @@ class FacebookLogin extends React.Component {
     cssClass: 'kep-login-facebook',
     version: '2.3',
     language: 'en_US',
+    style: {},
+    styleButton: {}
   };
 
   constructor(props) {
@@ -112,15 +116,16 @@ class FacebookLogin extends React.Component {
   }
 
   render() {
-    const { cssClass, size, icon, textButton } = this.props;
+    const { cssClass, size, icon, textButton, style, styleButton } = this.props;
     if (icon) {
       return this.renderWithFontAwesome();
     }
 
     return (
-      <span>
+      <span style={style}>
         <button
           className={`${cssClass} ${size}`}
+          style={styleButton}
           onClick={this.click}
         >
           {textButton}
