@@ -39,10 +39,14 @@ class FacebookLogin extends React.Component {
 
   componentDidMount() {
     const { appId, xfbml, cookie, version, autoLoad, language } = this.props;
-    const fbRoot = document.createElement('div');
-    fbRoot.id = 'fb-root';
+    let fbRoot = document.getElementById('fb-root');
 
-    document.body.appendChild(fbRoot);
+    if (!fbRoot) {
+      fbRoot = document.createElement('div');
+      fbRoot.id = 'fb-root';
+
+      document.body.appendChild(fbRoot);
+    }
 
     window.fbAsyncInit = () => {
       window.FB.init({
