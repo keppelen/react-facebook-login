@@ -91,7 +91,11 @@ class FacebookLogin extends React.Component {
 
   click = () => {
     const { scope, appId } = this.props;
-    if (navigator.userAgent.match('CriOS')) {
+    var isMobile = false;
+    try {
+        isMobile = ((window.navigator&&window.navigator.standalone)||navigator.userAgent.match('CriOS')||navigator.userAgent.match('mobile'));
+    } catch (e) {}
+    if ( isMobile ) {
       window.location.href = `https://www.facebook.com/dialog/oauth?client_id=${appId}&redirect_uri=${window.location.href}&state=facebookdirect&${scope}`;
     } else {
       window.FB.login(this.checkLoginState, { scope });
