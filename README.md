@@ -55,7 +55,7 @@ ReactDOM.render(
     fields="name,email,picture"
     callback={responseFacebook}
     cssClass="my-facebook-button-class"
-    icon="fa-facebook" 
+    icon="fa-facebook"
   />,
   document.getElementById('demo')
 );
@@ -83,7 +83,7 @@ class MyComponent extends React.Component {
         appId="1088597931155576"
         autoLoad={true}
         fields="name,email,picture"
-        callback={responseFacebook} 
+        callback={responseFacebook}
       />
     )
   }
@@ -109,3 +109,5 @@ export default MyComponent;
 |   version    |  string  |                  2.3                 |
 |   icon       |  string  |                  none                |
 |   language   |  string  |                  en_US               |
+|     style    |  object  |                  none                |
+|  styleButton |  object  |                  none                |
