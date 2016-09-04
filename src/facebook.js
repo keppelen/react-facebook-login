@@ -1,3 +1,4 @@
+// @flow
 import React, { PropTypes } from 'react';
 import styles from '../styles/facebook.scss';
 
@@ -16,7 +17,7 @@ class FacebookLogin extends React.Component {
     fields: PropTypes.string,
     cssClass: PropTypes.string,
     version: PropTypes.string,
-    icon: PropTypes.string,
+    icon: PropTypes.any,
     language: PropTypes.string,
   };
 
@@ -32,10 +33,6 @@ class FacebookLogin extends React.Component {
     version: '2.3',
     language: 'en_US',
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     const { appId, xfbml, cookie, version, autoLoad, language } = this.props;
@@ -65,7 +62,7 @@ class FacebookLogin extends React.Component {
       const element = d.getElementsByTagName(s)[0];
       const fjs = element;
       let js = element;
-      if (d.getElementById(id)) {return;}
+      if (d.getElementById(id)) { return; }
       js = d.createElement(s); js.id = id;
       js.src = `//connect.facebook.net/${language}/all.js`;
       fjs.parentNode.insertBefore(js, fjs);
@@ -106,35 +103,26 @@ class FacebookLogin extends React.Component {
     }
   };
 
-  renderWithFontAwesome() {
-    const { cssClass, size, icon, textButton, typeButton } = this.props;
-    return (
-      <span>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-        <button
-          type={typeButton}
-          className={`${cssClass} ${size}`}
-          onClick={this.click}
-        >
-          <i className={`fa ${icon}`}></i> {textButton}
-        </button>
-        <style dangerouslySetInnerHTML={{ __html: styles }}></style>
-      </span>
-    );
-  }
-
   render() {
     const { cssClass, size, icon, textButton } = this.props;
-    if (icon) {
-      return this.renderWithFontAwesome();
-    }
+    const isIconString = typeof icon === 'string';
 
     return (
       <span>
+        {isIconString && (
+          <link
+            rel="stylesheet"
+            href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+          />
+        )}
         <button
           className={`${cssClass} ${size}`}
           onClick={this.click}
         >
+          {icon && isIconString && (
+            <i className={`fa ${icon}`}></i>
+          )}
+          {icon && !isIconString && icon}
           {textButton}
         </button>
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
