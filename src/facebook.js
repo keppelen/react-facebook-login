@@ -54,7 +54,7 @@ class FacebookLogin extends React.Component {
       });
 
       if (autoLoad || window.location.search.includes('facebookdirect')) {
-        window.FB.getLoginStatus(this.checkLoginState);
+         window.FB.getLoginStatus(this.checkLoginAfterRefresh);
       }
     };
     // Load the SDK asynchronously
@@ -83,6 +83,14 @@ class FacebookLogin extends React.Component {
       if (this.props.callback) {
         this.props.callback({ status: response.status });
       }
+    }
+  };
+
+  checkLoginAfterRefresh = (response) => {
+    if (response.status === "unknown") {
+      window.FB.login(loginResponse => this.checkLoginState(loginResponse), true)
+    } else {
+      this.checkLoginState(response);
     }
   };
 
