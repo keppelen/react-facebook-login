@@ -1,3 +1,4 @@
+// @flow
 import React, { PropTypes } from 'react';
 import styles from '../styles/facebook.scss';
 
@@ -16,7 +17,7 @@ class FacebookLogin extends React.Component {
     fields: PropTypes.string,
     cssClass: PropTypes.string,
     version: PropTypes.string,
-    icon: PropTypes.string,
+    icon: PropTypes.any,
     language: PropTypes.string,
     onClick: PropTypes.func,
   };
@@ -34,16 +35,16 @@ class FacebookLogin extends React.Component {
     language: 'en_US',
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     const { appId, xfbml, cookie, version, autoLoad, language } = this.props;
-    const fbRoot = document.createElement('div');
-    fbRoot.id = 'fb-root';
+    let fbRoot = document.getElementById('fb-root');
 
-    document.body.appendChild(fbRoot);
+    if (!fbRoot) {
+      fbRoot = document.createElement('div');
+      fbRoot.id = 'fb-root';
+
+      document.body.appendChild(fbRoot);
+    }
 
     window.fbAsyncInit = () => {
       window.FB.init({
@@ -62,7 +63,7 @@ class FacebookLogin extends React.Component {
       const element = d.getElementsByTagName(s)[0];
       const fjs = element;
       let js = element;
-      if (d.getElementById(id)) {return;}
+      if (d.getElementById(id)) { return; }
       js = d.createElement(s); js.id = id;
       js.src = `//connect.facebook.net/${language}/all.js`;
       fjs.parentNode.insertBefore(js, fjs);
@@ -93,42 +94,41 @@ class FacebookLogin extends React.Component {
       onClick();
     }
 
-    if (navigator.userAgent.match('CriOS')) {
+    let isMobile = false;
+
+    try {
+      isMobile = ((window.navigator && window.navigator.standalone) || navigator.userAgent.match('CriOS') || navigator.userAgent.match('mobile'));
+    } catch (ex) {
+      // continue regardless of error
+    }
+
+    if (isMobile) {
       window.location.href = `https://www.facebook.com/dialog/oauth?client_id=${appId}&redirect_uri=${window.location.href}&state=facebookdirect&${scope}`;
     } else {
       window.FB.login(this.checkLoginState, { scope });
     }
   };
 
-  renderWithFontAwesome() {
-    const { cssClass, size, icon, textButton, typeButton } = this.props;
-    return (
-      <span>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-        <button
-          type={typeButton}
-          className={`${cssClass} ${size}`}
-          onClick={this.click}
-        >
-          <i className={`fa ${icon}`}></i> {textButton}
-        </button>
-        <style dangerouslySetInnerHTML={{ __html: styles }}></style>
-      </span>
-    );
-  }
-
   render() {
     const { cssClass, size, icon, textButton } = this.props;
-    if (icon) {
-      return this.renderWithFontAwesome();
-    }
+    const isIconString = typeof icon === 'string';
 
     return (
       <span>
+        {isIconString && (
+          <link
+            rel="stylesheet"
+            href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+          />
+        )}
         <button
           className={`${cssClass} ${size}`}
           onClick={this.click}
         >
+          {icon && isIconString && (
+            <i className={`fa ${icon}`}></i>
+          )}
+          {icon && !isIconString && icon}
           {textButton}
         </button>
         <style dangerouslySetInnerHTML={{ __html: styles }}></style>
