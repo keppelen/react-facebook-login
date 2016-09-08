@@ -32,6 +32,7 @@ ReactDOM.render(
     appId="1088597931155576"
     autoLoad={true}
     fields="name,email,picture"
+    onClick={componentClicked}
     callback={responseFacebook} />,
   document.getElementById('demo')
 );
@@ -169,3 +170,4 @@ export default MyComponent;
 |   version    |     string          |                  2.3                                |
 |   icon       |     string|element  |                  none                               |
 |   language   |     string          |                  en_US                              |
+|   onClick    |     function        |                  Initial click on the component     |
