@@ -20,6 +20,7 @@ class FacebookLogin extends React.Component {
     icon: PropTypes.any,
     language: PropTypes.string,
     onClick: PropTypes.func,
+    children: PropTypes.func
   };
 
   static defaultProps = {
