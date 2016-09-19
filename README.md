@@ -153,6 +153,34 @@ class MyComponent extends React.Component {
 export default MyComponent;
 ```
 
+### Complete custom handle
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import FacebookLogin from 'react-facebook-login';
+
+const responseFacebook = (response) => {
+  console.log(response);
+}
+
+ReactDOM.render(
+  <FacebookLogin
+    appId="1088597931155576"
+    autoLoad={true}
+    fields="name,email,picture"
+    callback={responseFacebook}
+    cssClass="my-facebook-button-class"
+    icon={<TiSocialFacebookCircular />}
+  >
+  {({handle}) => (
+    <a onClick={handle}>Facebook Login</a>
+  )}
+  </FacebookLogin>
+  ,
+  document.getElementById('demo')
+);
+```
+
 
 ## Parameters
 

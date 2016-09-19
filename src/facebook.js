@@ -20,6 +20,7 @@ class FacebookLogin extends React.Component {
     icon: PropTypes.any,
     language: PropTypes.string,
     onClick: PropTypes.func,
+    children: PropTypes.func
   };
 
   static defaultProps = {
@@ -110,9 +111,13 @@ class FacebookLogin extends React.Component {
   };
 
   render() {
-    const { cssClass, size, icon, textButton } = this.props;
+    const { cssClass, size, icon, textButton, children } = this.props;
     const isIconString = typeof icon === 'string';
-
+    
+    if(children) {
+      return children({handle: this.click })
+    }
+    
     return (
       <span>
         {isIconString && (
