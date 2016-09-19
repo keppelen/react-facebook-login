@@ -110,9 +110,13 @@ class FacebookLogin extends React.Component {
   };
 
   render() {
-    const { cssClass, size, icon, textButton } = this.props;
+    const { cssClass, size, icon, textButton, children } = this.props;
     const isIconString = typeof icon === 'string';
-
+    
+    if(children) {
+      return children({handle: this.click })
+    }
+    
     return (
       <span>
         {isIconString && (
