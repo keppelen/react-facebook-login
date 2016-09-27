@@ -2,6 +2,17 @@
 import React, { PropTypes } from 'react';
 import styles from '../styles/facebook.scss';
 
+const objectToParams = () => {
+  let str = '';
+  for (let key in obj) {
+      if (str !== '') {
+          str += '&';
+      }
+      str += `${key}=${encodeURIComponent(obj[key])}`;
+  }
+  return str;
+}
+
 class FacebookLogin extends React.Component {
 
   static propTypes = {
@@ -9,6 +20,7 @@ class FacebookLogin extends React.Component {
     appId: PropTypes.string.isRequired,
     xfbml: PropTypes.bool,
     cookie: PropTypes.bool,
+    reAuthenticate: PropTypes.bool,
     scope: PropTypes.string,
     textButton: PropTypes.string,
     typeButton: PropTypes.string,
@@ -28,6 +40,7 @@ class FacebookLogin extends React.Component {
     scope: 'public_profile,email',
     xfbml: false,
     cookie: false,
+    reAuthenticate: false,
     size: 'metro',
     fields: 'name',
     cssClass: 'kep-login-facebook',
@@ -88,7 +101,7 @@ class FacebookLogin extends React.Component {
   };
 
   click = () => {
-    const { scope, appId, onClick } = this.props;
+    const { scope, appId, onClick, reAuthenticate } = this.props;
 
     if (typeof onClick === 'function') {
       onClick();
@@ -102,10 +115,21 @@ class FacebookLogin extends React.Component {
       // continue regardless of error
     }
 
+    const params = {
+      client_id: appId,
+      redirect_uri: window.location.href,
+      state: 'facebookdirect',
+      scope,
+    };
+
+    if (reAuthenticate) {
+      params.auth_type = 'reauthenticate';
+    }
+
     if (isMobile) {
-      window.location.href = `https://www.facebook.com/dialog/oauth?client_id=${appId}&redirect_uri=${window.location.href}&state=facebookdirect&${scope}`;
+      window.location.href = `https://www.facebook.com/dialog/oauth?${objectToParams(params)}`;
     } else {
-      window.FB.login(this.checkLoginState, { scope });
+      window.FB.login(this.checkLoginState, { scope, auth_type: params.auth_type });
     }
   };
 
