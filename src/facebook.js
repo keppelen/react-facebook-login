@@ -1,17 +1,7 @@
 // @flow
 import React, { PropTypes } from 'react';
 import styles from '../styles/facebook.scss';
-
-const objectToParams = () => {
-  let str = '';
-  for (let key in obj) {
-      if (str !== '') {
-          str += '&';
-      }
-      str += `${key}=${encodeURIComponent(obj[key])}`;
-  }
-  return str;
-}
+import objectToParams from './objectToParams';
 
 class FacebookLogin extends React.Component {
 
