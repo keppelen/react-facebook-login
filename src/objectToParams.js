@@ -6,9 +6,9 @@
  */
 export default paramsObj => {
   let str = '';
-  for (let key in paramsObj) {
+  for (const key in paramsObj) {
     if (str !== '') {
-        str += '&';
+      str += '&';
     }
     str += `${key}=${encodeURIComponent(paramsObj[key])}`;
   }
