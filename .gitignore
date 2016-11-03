@@ -1,4 +1,5 @@
 node_modules/
 .DS_store
 .module-cache
-npm-debug.log
+*.log
+yarn.lock
