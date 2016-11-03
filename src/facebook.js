@@ -80,6 +80,15 @@ class FacebookLogin extends React.Component {
     });
   };
 
+  // When page refreshes sometimes response is unknown and we need to call window.FB.login again 
+  checkLoginAfterRefresh = (response) => {
+    if (response.status === "unknown") {
+      window.FB.login((function(response) {
+        this.checkLoginState(response);
+      }).bind(this), true);
+    }
+  };
+
   checkLoginState = (response) => {
     if (response.authResponse) {
       this.responseApi(response.authResponse);
