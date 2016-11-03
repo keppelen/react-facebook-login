@@ -137,6 +137,14 @@ class FacebookLogin extends React.Component {
     }
   };
 
+  style() {
+    const defaultCSS = this.constructor.defaultProps.cssClass;
+    if (this.props.cssClass === defaultCSS) {
+      return <style dangerouslySetInnerHTML={{ __html: styles }}></style>;
+    }
+    return false;
+  }
+
   render() {
     const { cssClass, size, icon, textButton } = this.props;
     const isIconString = typeof icon === 'string';
@@ -159,7 +167,7 @@ class FacebookLogin extends React.Component {
           {icon && !isIconString && icon}
           {textButton}
         </button>
-        <style dangerouslySetInnerHTML={{ __html: styles }}></style>
+        {this.style()}
       </span>
     );
   }
