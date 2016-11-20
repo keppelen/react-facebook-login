@@ -6,6 +6,7 @@ import objectToParams from './objectToParams';
 class FacebookLogin extends React.Component {
 
   static propTypes = {
+    isDisabled: PropTypes.bool,
     callback: PropTypes.func.isRequired,
     appId: PropTypes.string.isRequired,
     xfbml: PropTypes.bool,
@@ -111,7 +112,7 @@ class FacebookLogin extends React.Component {
   };
 
   click = () => {
-    if (!this.state.isLoaded || this.state.isProcessing) {
+    if (!this.state.isLoaded || this.state.isProcessing || this.props.isDisabled) {
       return;
     }
     this.setState({ isProcessing: true });
@@ -158,7 +159,7 @@ class FacebookLogin extends React.Component {
   // [AdGo] 20.11.2016 - coult not get container class to work
   containerStyle() {
     const style = { transition: 'opacity 0.5s' };
-    if (this.state.isProcessing || !this.state.isLoaded) {
+    if (this.state.isProcessing || !this.state.isLoaded || this.props.isDisabled) {
       style.opacity = 0.6;
     }
     return style;
