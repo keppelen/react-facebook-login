@@ -40,6 +40,7 @@ class FacebookLogin extends React.Component {
 
   state = {
     isLoaded: false,
+    isProcessing: false,
   };
 
   componentDidMount() {
@@ -91,6 +92,7 @@ class FacebookLogin extends React.Component {
   };
 
   checkLoginState = (response) => {
+    this.setState({ isProcessing: false });
     if (response.authResponse) {
       this.responseApi(response.authResponse);
     } else {
@@ -109,9 +111,10 @@ class FacebookLogin extends React.Component {
   };
 
   click = () => {
-    if (!this.state.isLoaded) {
+    if (!this.state.isLoaded || this.state.isProcessing) {
       return;
     }
+    this.setState({ isProcessing: true });
     const { scope, appId, onClick, reAuthenticate } = this.props;
 
     if (typeof onClick === 'function') {
