@@ -155,11 +155,20 @@ class FacebookLogin extends React.Component {
     return false;
   }
 
+  // [AdGo] 20.11.2016 - coult not get container class to work
+  containerStyle() {
+    const style = { transition: 'opacity 0.5s' };
+    if (this.state.isProcessing || !this.state.isLoaded) {
+      style.opacity = 0.6;
+    }
+    return style;
+  }
+
   render() {
     const { cssClass, size, icon, textButton } = this.props;
     const isIconString = typeof icon === 'string';
     return (
-      <span>
+      <span style={ this.containerStyle() }>
         {isIconString && (
           <link
             rel="stylesheet"
