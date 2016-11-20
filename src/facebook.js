@@ -38,6 +38,10 @@ class FacebookLogin extends React.Component {
     language: 'en_US',
   };
 
+  state = {
+    isLoaded: false,
+  };
+
   componentDidMount() {
     const { appId, xfbml, cookie, version, autoLoad, language } = this.props;
     let fbRoot = document.getElementById('fb-root');
@@ -56,7 +60,7 @@ class FacebookLogin extends React.Component {
         xfbml,
         cookie,
       });
-
+      this.setState({ isLoaded: true });
       if (autoLoad || window.location.search.includes('facebookdirect')) {
         window.FB.getLoginStatus(this.checkLoginAfterRefresh);
       }
@@ -105,6 +109,9 @@ class FacebookLogin extends React.Component {
   };
 
   click = () => {
+    if (!this.state.isLoaded) {
+      return;
+    }
     const { scope, appId, onClick, reAuthenticate } = this.props;
 
     if (typeof onClick === 'function') {
@@ -148,7 +155,6 @@ class FacebookLogin extends React.Component {
   render() {
     const { cssClass, size, icon, textButton } = this.props;
     const isIconString = typeof icon === 'string';
-
     return (
       <span>
         {isIconString && (
