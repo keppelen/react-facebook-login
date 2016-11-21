@@ -23,6 +23,8 @@ class FacebookLogin extends React.Component {
     icon: PropTypes.any,
     language: PropTypes.string,
     onClick: PropTypes.func,
+    containerStyle: PropTypes.object,
+    buttonStyle: PropTypes.object,
   };
 
   static defaultProps = {
@@ -162,11 +164,11 @@ class FacebookLogin extends React.Component {
     if (this.state.isProcessing || !this.state.isLoaded || this.props.isDisabled) {
       style.opacity = 0.6;
     }
-    return style;
+    return Object.assign(style, this.props.containerStyle);
   }
 
   render() {
-    const { cssClass, size, icon, textButton } = this.props;
+    const { cssClass, size, icon, textButton, buttonStyle } = this.props;
     const isIconString = typeof icon === 'string';
     return (
       <span style={ this.containerStyle() }>
@@ -178,6 +180,7 @@ class FacebookLogin extends React.Component {
         )}
         <button
           className={`${cssClass} ${size}`}
+          style={ buttonStyle }
           onClick={this.click}
         >
           {icon && isIconString && (
