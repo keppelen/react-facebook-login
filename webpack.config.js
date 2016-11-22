@@ -1,11 +1,9 @@
-'use strict';
-
-var path = require('path');
-var webpack = require('webpack');
+const webpack = require('webpack');
+const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
 
-  devtool: 'eval',
+  devtool: isProd ? 'eval' : 'source-map',
 
   entry: {
     demo: ['webpack/hot/dev-server', './demo/index.js'],
@@ -14,12 +12,12 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass'},
-    ]
+      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass' },
+    ],
   },
 
   output: {
-    filename: 'demo/bundle.js'
+    filename: 'demo/bundle.js',
   },
 
   resolve: {
@@ -27,10 +25,10 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
 
   devServer: {
-    contentBase: './demo'
-  }
+    contentBase: './demo',
+  },
 };

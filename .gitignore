@@ -1,4 +1,5 @@
 node_modules/
+*sublime*
 .DS_store
 .module-cache
 *.log
