@@ -42,21 +42,30 @@ class FacebookLogin extends React.Component {
   };
 
   state = {
-    isLoaded: false,
+    isSdkLoaded: false,
     isProcessing: false,
   };
 
-  componentDidMount() {
-    const { appId, xfbml, cookie, version, autoLoad, language } = this.props;
-    let fbRoot = document.getElementById('fb-root');
+  componentWillMount() {
+    if (document.getElementById('facebook-jssdk')) {
+      this.setState({ isSdkLoaded: true });
+      return;
+    }
+    this.setFbAsyncInit();
+    this.loadSdkAsynchronously();
+  }
 
+  componentDidMount() {
+    let fbRoot = document.getElementById('fb-root');
     if (!fbRoot) {
       fbRoot = document.createElement('div');
       fbRoot.id = 'fb-root';
-
       document.body.appendChild(fbRoot);
     }
+  }
 
+  setFbAsyncInit() {
+    const { appId, xfbml, cookie, version, autoLoad } = this.props;
     window.fbAsyncInit = () => {
       window.FB.init({
         version: `v${version}`,
@@ -64,12 +73,15 @@ class FacebookLogin extends React.Component {
         xfbml,
         cookie,
       });
-      this.setState({ isLoaded: true });
+      this.setState({ isSdkLoaded: true });
       if (autoLoad || window.location.search.includes('facebookdirect')) {
         window.FB.getLoginStatus(this.checkLoginAfterRefresh);
       }
     };
-    // Load the SDK asynchronously
+  }
+
+  loadSdkAsynchronously() {
+    const { language } = this.props;
     ((d, s, id) => {
       const element = d.getElementsByTagName(s)[0];
       const fjs = element;
@@ -114,7 +126,7 @@ class FacebookLogin extends React.Component {
   };
 
   click = () => {
-    if (!this.state.isLoaded || this.state.isProcessing || this.props.isDisabled) {
+    if (!this.state.isSdkLoaded || this.state.isProcessing || this.props.isDisabled) {
       return;
     }
     this.setState({ isProcessing: true });
@@ -161,7 +173,7 @@ class FacebookLogin extends React.Component {
   // [AdGo] 20.11.2016 - coult not get container class to work
   containerStyle() {
     const style = { transition: 'opacity 0.5s' };
-    if (this.state.isProcessing || !this.state.isLoaded || this.props.isDisabled) {
+    if (this.state.isProcessing || !this.state.isSdkLoaded || this.props.isDisabled) {
       style.opacity = 0.6;
     }
     return Object.assign(style, this.props.containerStyle);
