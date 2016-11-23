@@ -168,6 +168,7 @@ export default MyComponent;
 |reAuthenticate|     boolean         |                  false                              |
 |   textButton |     string          |           Login with Facebook                       |
 |   cssClass   |     string          | kep-login-facebook kep-login-facebook-[button-size] |
+| redirectUri  |     string          |               window.location.href (mobile-only)    |
 |   version    |     string          |                  2.3                                |
 |   icon       |     string|element  |                  none                               |
 |   language   |     string          |                  en_US                              |

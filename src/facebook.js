@@ -13,6 +13,7 @@ class FacebookLogin extends React.Component {
     cookie: PropTypes.bool,
     reAuthenticate: PropTypes.bool,
     scope: PropTypes.string,
+    redirectUri: PropTypes.string,
     textButton: PropTypes.string,
     typeButton: PropTypes.string,
     autoLoad: PropTypes.bool,
@@ -28,6 +29,7 @@ class FacebookLogin extends React.Component {
   static defaultProps = {
     textButton: 'Login with Facebook',
     typeButton: 'button',
+    redirectUri: window.location.href,
     scope: 'public_profile,email',
     xfbml: false,
     cookie: false,
@@ -116,7 +118,7 @@ class FacebookLogin extends React.Component {
       return;
     }
     this.setState({ isProcessing: true });
-    const { scope, appId, onClick, reAuthenticate } = this.props;
+    const { scope, appId, onClick, reAuthenticate, redirectUri } = this.props;
 
     if (typeof onClick === 'function') {
       onClick();
@@ -132,7 +134,7 @@ class FacebookLogin extends React.Component {
 
     const params = {
       client_id: appId,
-      redirect_uri: window.location.href,
+      redirect_uri: redirectUri,
       state: 'facebookdirect',
       scope,
     };
