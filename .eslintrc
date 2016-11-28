@@ -13,5 +13,8 @@
   ],
   "globals": {
     "FB": false
+  },
+  "rules": {
+    "react/no-multi-comp": 0
   }
 }

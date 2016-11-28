@@ -29,7 +29,6 @@
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "autoprefixer": "^6.0.3",
-
     "babel": "^6.5.2",
     "babel-core": "^6.6.5",
     "babel-eslint": "^4.1.6",
@@ -47,6 +46,7 @@
     "react-css-modules": "^3.5.0",
     "sass-loader": "^3.0.0",
     "style-loader": "0.12.x",
+    "react-router": "^3.0.0",
     "webpack": "1.12.x",
     "webpack-dev-server": "1.12.x"
   },
