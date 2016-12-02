@@ -16,6 +16,7 @@ class FacebookLogin extends React.Component {
     textButton: PropTypes.string,
     typeButton: PropTypes.string,
     autoLoad: PropTypes.bool,
+    disableMobileRedirect: PropTypes.bool,
     size: PropTypes.string,
     fields: PropTypes.string,
     cssClass: PropTypes.string,
@@ -39,6 +40,7 @@ class FacebookLogin extends React.Component {
     cssClass: 'kep-login-facebook',
     version: '2.3',
     language: 'en_US',
+    disableMobileRedirect: false,
   };
 
   state = {
@@ -130,7 +132,7 @@ class FacebookLogin extends React.Component {
       return;
     }
     this.setState({ isProcessing: true });
-    const { scope, appId, onClick, reAuthenticate } = this.props;
+    const { scope, appId, onClick, reAuthenticate, disableMobileRedirect } = this.props;
 
     if (typeof onClick === 'function') {
       onClick();
@@ -155,7 +157,7 @@ class FacebookLogin extends React.Component {
       params.auth_type = 'reauthenticate';
     }
 
-    if (isMobile) {
+    if (isMobile && !disableMobileRedirect) {
       window.location.href = `//www.facebook.com/dialog/oauth?${objectToParams(params)}`;
     } else {
       window.FB.login(this.checkLoginState, { scope, auth_type: params.auth_type });
