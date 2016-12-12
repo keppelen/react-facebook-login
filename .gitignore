@@ -4,3 +4,4 @@ node_modules/
 .module-cache
 *.log
 yarn.lock
+.idea
