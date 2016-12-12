@@ -198,6 +198,7 @@ class FacebookLogin extends React.Component {
           className={`${cssClass} ${size}`}
           style={ buttonStyle }
           onClick={this.click}
+          type="button"
         >
           {icon && isIconString && (
             <i className={`fa ${icon}`}></i>
