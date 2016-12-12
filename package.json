@@ -1,5 +1,5 @@
 {
-  "name": "react-facebook-login",
+  "name": "@nhducit/react-facebook-login",
   "version": "3.4.1",
   "description": "A Component React for Facebook Login",
   "main": "dist/facebook-login.js",
