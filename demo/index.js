@@ -13,7 +13,9 @@ class Base extends Component {
       <div>
         <Link to="/dummy">Route to dummy page</Link>
         <FacebookLogin
-          appId="1088597931155576"
+          appId="791254167588665"
+          scope="email"
+          authType="rerequest"
           autoLoad
           buttonStyle={ { fontSize: 40 } }
           callback={responseFacebook}
