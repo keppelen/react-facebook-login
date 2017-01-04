@@ -36,7 +36,7 @@ class FacebookLogin extends React.Component {
     scope: 'public_profile,email',
     xfbml: false,
     cookie: false,
-    authType: "",
+    authType: '',
     size: 'metro',
     fields: 'name',
     cssClass: 'kep-login-facebook',
@@ -155,7 +155,7 @@ class FacebookLogin extends React.Component {
       scope,
     };
 
-    if (authType !== "") {
+    if (authType !== '') {
       params.auth_type = authType;
     }
 
