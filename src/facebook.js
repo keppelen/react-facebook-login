@@ -184,7 +184,7 @@ class FacebookLogin extends React.Component {
   }
 
   render() {
-    const { cssClass, size, icon, textButton, buttonStyle } = this.props;
+    const { cssClass, size, icon, textButton, typeButton, buttonStyle } = this.props;
     const isIconString = typeof icon === 'string';
     return (
       <span style={ this.containerStyle() }>
@@ -195,6 +195,7 @@ class FacebookLogin extends React.Component {
           />
         )}
         <button
+          type={typeButton}
           className={`${cssClass} ${size}`}
           style={ buttonStyle }
           onClick={this.click}
