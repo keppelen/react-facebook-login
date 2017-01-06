@@ -32,7 +32,7 @@ class FacebookLogin extends React.Component {
   static defaultProps = {
     textButton: 'Login with Facebook',
     typeButton: 'button',
-    redirectUri: window.location.href,
+    redirectUri: typeof window !== 'undefined' ? window.location.href : '/',
     scope: 'public_profile,email',
     xfbml: false,
     cookie: false,
