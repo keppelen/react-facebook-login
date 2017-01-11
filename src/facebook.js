@@ -32,7 +32,6 @@ class FacebookLogin extends React.Component {
   static defaultProps = {
     textButton: 'Login with Facebook',
     typeButton: 'button',
-    redirectUri: window.location.href,
     scope: 'public_profile,email',
     xfbml: false,
     cookie: false,
@@ -50,15 +49,6 @@ class FacebookLogin extends React.Component {
     isProcessing: false,
   };
 
-  componentWillMount() {
-    if (document.getElementById('facebook-jssdk')) {
-      this.setState({ isSdkLoaded: true });
-      return;
-    }
-    this.setFbAsyncInit();
-    this.loadSdkAsynchronously();
-  }
-
   componentDidMount() {
     let fbRoot = document.getElementById('fb-root');
     if (!fbRoot) {
@@ -66,6 +56,13 @@ class FacebookLogin extends React.Component {
       fbRoot.id = 'fb-root';
       document.body.appendChild(fbRoot);
     }
+
+    if (document.getElementById('facebook-jssdk')) {
+      this.setState({ isSdkLoaded: true });
+      return;
+    }
+    this.setFbAsyncInit();
+    this.loadSdkAsynchronously();
   }
 
   setFbAsyncInit() {
@@ -134,7 +131,8 @@ class FacebookLogin extends React.Component {
       return;
     }
     this.setState({ isProcessing: true });
-    const { scope, appId, onClick, authType, redirectUri, disableMobileRedirect } = this.props;
+    const { scope, appId, onClick, authType, disableMobileRedirect } = this.props;
+    const redirectUri = this.props.redirectUri ? this.props.redirectUri : window.location.href;
 
     if (typeof onClick === 'function') {
       onClick();
