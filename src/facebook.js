@@ -105,12 +105,6 @@ class FacebookLogin extends React.Component {
     });
   };
 
-  checkLoginAfterRefresh = (response) => {
-    if (response.status === 'unknown') {
-      window.FB.login(loginResponse => this.checkLoginState(loginResponse), true);
-    }
-  };
-
   checkLoginState = (response) => {
     this.setState({ isProcessing: false });
     if (response.authResponse) {
@@ -123,10 +117,10 @@ class FacebookLogin extends React.Component {
   };
 
   checkLoginAfterRefresh = (response) => {
-    if (response.status === 'unknown') {
-      window.FB.login(loginResponse => this.checkLoginState(loginResponse), true);
-    } else {
+    if (response.status === 'connected') {
       this.checkLoginState(response);
+    } else {
+      window.FB.login(loginResponse => this.checkLoginState(loginResponse), true);
     }
   };
 
