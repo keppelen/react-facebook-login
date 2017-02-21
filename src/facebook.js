@@ -3,6 +3,18 @@ import React, { PropTypes } from 'react';
 import styles from '../styles/facebook.scss';
 import objectToParams from './objectToParams';
 
+const getIsMobile = () => {
+  let isMobile = false;
+
+  try {
+    isMobile = ((window.navigator && window.navigator.standalone) || navigator.userAgent.match('CriOS') || navigator.userAgent.match(/mobile/i));
+  } catch (ex) {
+    // continue regardless of error
+  }
+
+  return isMobile;
+};
+
 class FacebookLogin extends React.Component {
 
   static propTypes = {
@@ -18,6 +30,7 @@ class FacebookLogin extends React.Component {
     typeButton: PropTypes.string,
     autoLoad: PropTypes.bool,
     disableMobileRedirect: PropTypes.bool,
+    isMobile: PropTypes.bool,
     size: PropTypes.string,
     fields: PropTypes.string,
     cssClass: PropTypes.string,
@@ -43,6 +56,7 @@ class FacebookLogin extends React.Component {
     version: '2.3',
     language: 'en_US',
     disableMobileRedirect: false,
+    isMobile: getIsMobile(),
   };
 
   state = {
@@ -135,14 +149,6 @@ class FacebookLogin extends React.Component {
       onClick();
     }
 
-    let isMobile = false;
-
-    try {
-      isMobile = ((window.navigator && window.navigator.standalone) || navigator.userAgent.match('CriOS') || navigator.userAgent.match(/mobile/i));
-    } catch (ex) {
-      // continue regardless of error
-    }
-
     const params = {
       client_id: appId,
       redirect_uri: redirectUri,
@@ -154,7 +160,7 @@ class FacebookLogin extends React.Component {
       params.auth_type = 'reauthenticate';
     }
 
-    if (isMobile && !disableMobileRedirect) {
+    if (this.props.isMobile && !disableMobileRedirect) {
       window.location.href = `//www.facebook.com/dialog/oauth?${objectToParams(params)}`;
     } else {
       window.FB.login(this.checkLoginState, { scope, auth_type: params.auth_type });
