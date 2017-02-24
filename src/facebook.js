@@ -117,7 +117,7 @@ class FacebookLogin extends React.Component {
   };
 
   checkLoginState = (response) => {
-    this.setStateIfMounted({isProcessing: false});
+    this.setStateIfMounted({ isProcessing: false });
     if (response.authResponse) {
       this.responseApi(response.authResponse);
     } else {
