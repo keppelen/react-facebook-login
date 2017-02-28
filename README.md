@@ -174,4 +174,4 @@ export default MyComponent;
 |   language   |     string          |                  en_US                              |
 |   onClick    |     function        |                  Initial click on the component     |
 |   isMobile   |     boolean         |                  detected via userAgent             |
-
+|     tag      |     string          |                  HTML Element, Ex: 'a', 'button'             |
