@@ -8,3 +8,7 @@
 .wafpickle-*
 CVS
 npm-debug.log
+src/
+demo/
+styles/
+webpack*
