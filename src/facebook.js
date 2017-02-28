@@ -40,6 +40,7 @@ class FacebookLogin extends React.Component {
     onClick: PropTypes.func,
     containerStyle: PropTypes.object,
     buttonStyle: PropTypes.object,
+    tag: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static defaultProps = {
@@ -57,6 +58,7 @@ class FacebookLogin extends React.Component {
     language: 'en_US',
     disableMobileRedirect: false,
     isMobile: getIsMobile(),
+    tag: 'button',
   };
 
   state = {
@@ -77,6 +79,17 @@ class FacebookLogin extends React.Component {
       fbRoot.id = 'fb-root';
       document.body.appendChild(fbRoot);
     }
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  setStateIfMounted(state) {
+    if (this._isMounted) {
+      this.setState(state);
+    }
   }
 
   setFbAsyncInit() {
@@ -88,7 +101,7 @@ class FacebookLogin extends React.Component {
         xfbml,
         cookie,
       });
-      this.setState({ isSdkLoaded: true });
+      this.setStateIfMounted({ isSdkLoaded: true });
       if (autoLoad || window.location.search.includes('facebookdirect')) {
         window.FB.getLoginStatus(this.checkLoginAfterRefresh);
       }
@@ -120,7 +133,7 @@ class FacebookLogin extends React.Component {
   };
 
   checkLoginState = (response) => {
-    this.setState({ isProcessing: false });
+    this.setStateIfMounted({ isProcessing: false });
     if (response.authResponse) {
       this.responseApi(response.authResponse);
     } else {
@@ -195,7 +208,7 @@ class FacebookLogin extends React.Component {
             href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
           />
         )}
-        <button
+        <this.props.tag
           type={typeButton}
           className={`${cssClass} ${size}`}
           style={ buttonStyle }
@@ -206,7 +219,7 @@ class FacebookLogin extends React.Component {
           )}
           {icon && !isIconString && icon}
           {textButton}
-        </button>
+        </this.props.tag>
         {this.style()}
       </span>
     );
