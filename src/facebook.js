@@ -27,6 +27,7 @@ class FacebookLogin extends React.Component {
     onClick: PropTypes.func,
     containerStyle: PropTypes.object,
     buttonStyle: PropTypes.object,
+    tag: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   };
 
   static defaultProps = {
@@ -43,6 +44,7 @@ class FacebookLogin extends React.Component {
     version: '2.3',
     language: 'en_US',
     disableMobileRedirect: false,
+    tag: 'button',
   };
 
   state = {
@@ -200,7 +202,7 @@ class FacebookLogin extends React.Component {
             href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
           />
         )}
-        <button
+        <this.props.tag
           type={typeButton}
           className={`${cssClass} ${size}`}
           style={ buttonStyle }
@@ -211,7 +213,7 @@ class FacebookLogin extends React.Component {
           )}
           {icon && !isIconString && icon}
           {textButton}
-        </button>
+        </this.props.tag>
         {this.style()}
       </span>
     );
