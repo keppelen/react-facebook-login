@@ -173,3 +173,5 @@ export default MyComponent;
 |   icon       |     string|element  |                  none                               |
 |   language   |     string          |                  en_US                              |
 |   onClick    |     function        |                  Initial click on the component     |
+|   isMobile   |     boolean         |                  detected via userAgent             |
+
