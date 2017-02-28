@@ -65,6 +65,17 @@ class FacebookLogin extends React.Component {
       fbRoot.id = 'fb-root';
       document.body.appendChild(fbRoot);
     }
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  setStateIfMounted(state) {
+    if (this._isMounted) {
+      this.setState(state);
+    }
   }
 
   setFbAsyncInit() {
@@ -76,7 +87,7 @@ class FacebookLogin extends React.Component {
         xfbml,
         cookie,
       });
-      this.setState({ isSdkLoaded: true });
+      this.setStateIfMounted({ isSdkLoaded: true });
       if (autoLoad || window.location.search.includes('facebookdirect')) {
         window.FB.getLoginStatus(this.checkLoginAfterRefresh);
       }
@@ -108,7 +119,7 @@ class FacebookLogin extends React.Component {
   };
 
   checkLoginState = (response) => {
-    this.setState({ isProcessing: false });
+    this.setStateIfMounted({ isProcessing: false });
     if (response.authResponse) {
       this.responseApi(response.authResponse);
     } else {
