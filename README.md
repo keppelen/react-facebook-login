@@ -100,13 +100,9 @@ see https://developers.facebook.com/docs/facebook-login/permissions for permissi
   import FacebookLogin from 'react-facebook-login';
 
   class MyComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    };
-
-    responseFacebook = (response) => {
+    responseFacebook(response) {
       console.log(response);
-    };
+    }
 
     render() {
       return (
@@ -115,11 +111,13 @@ see https://developers.facebook.com/docs/facebook-login/permissions for permissi
           autoLoad={true}
           fields="name,email,picture"
           scope="public_profile,user_friends,user_actions.books"
-          callback={responseFacebook}
+          callback={this.responseFacebook}
         />
       )
     }
   }
+  
+  export default MyComponent;
 ```
 
 ### Server
@@ -130,13 +128,9 @@ import React from 'react';
 import FacebookLogin from 'react-facebook-login';
 
 class MyComponent extends React.Component {
-  constructor(props) {
-      super(props);
-  };
-
-  responseFacebook = (response) => {
-    console.log(response);
-  };
+  responseFacebook(response) {
+    console.log(response)
+  }
 
   render() {
     return (
@@ -144,7 +138,7 @@ class MyComponent extends React.Component {
         appId="1088597931155576"
         autoLoad={true}
         fields="name,email,picture"
-        callback={responseFacebook}
+        callback={this.responseFacebook}
       />
     )
   }
