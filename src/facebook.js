@@ -151,7 +151,7 @@ class FacebookLogin extends React.Component {
     }
   };
 
-  click = () => {
+  click = (e) => {
     if (!this.state.isSdkLoaded || this.state.isProcessing || this.props.isDisabled) {
       return;
     }
@@ -159,7 +159,10 @@ class FacebookLogin extends React.Component {
     const { scope, appId, onClick, reAuthenticate, redirectUri, disableMobileRedirect } = this.props;
 
     if (typeof onClick === 'function') {
-      onClick();
+      onClick(e);
+      if (e.defaultPrevented) {
+        return;
+      }
     }
 
     const params = {
