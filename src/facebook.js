@@ -67,6 +67,7 @@ class FacebookLogin extends React.Component {
   };
 
   componentDidMount() {
+    this._isMounted = true;
     if (document.getElementById('facebook-jssdk')) {
       this.sdkLoaded();
       return;
@@ -79,7 +80,6 @@ class FacebookLogin extends React.Component {
       fbRoot.id = 'fb-root';
       document.body.appendChild(fbRoot);
     }
-    this._isMounted = true;
   }
 
   componentWillUnmount() {
