@@ -15,6 +15,17 @@ const getIsMobile = () => {
   return isMobile;
 };
 
+// https://www.w3.org/TR/html5/disabled-elements.html#disabled-elements
+const _shouldAddDisabledProp = (tag) => [
+  'button',
+  'input',
+  'select',
+  'textarea',
+  'optgroup',
+  'option',
+  'fieldset',
+].indexOf((tag + '').toLowerCase()) >= 0;
+
 class FacebookLogin extends React.Component {
 
   static propTypes = {
@@ -203,6 +214,10 @@ class FacebookLogin extends React.Component {
   render() {
     const { cssClass, size, icon, textButton, typeButton, buttonStyle } = this.props;
     const isIconString = typeof icon === 'string';
+    const optionalProps = {};
+    if (this.props.isDisabled && _shouldAddDisabledProp(this.props.tag)) {
+      optionalProps.disabled = true;
+    }
     return (
       <span style={ this.containerStyle() }>
         {isIconString && (
@@ -216,6 +231,7 @@ class FacebookLogin extends React.Component {
           className={`${cssClass} ${size}`}
           style={ buttonStyle }
           onClick={this.click}
+          {...optionalProps}
         >
           {icon && isIconString && (
             <i className={`fa ${icon}`}></i>
