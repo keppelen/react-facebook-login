@@ -41,7 +41,7 @@
     "eslint-plugin-react": "^3.11.3",
     "node-sass": "^3.3.x",
     "postcss-loader": "^0.6.0",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.5.10",
     "react": "^15.1.0",
     "react-addons-test-utils": "^15.1.0",
     "react-css-modules": "^3.5.0",
