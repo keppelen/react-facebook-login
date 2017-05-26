@@ -2,11 +2,12 @@
   "name": "react-facebook-login",
   "version": "3.6.1",
   "description": "A Component React for Facebook Login",
-  "main": "dist/facebook-login.js",
+  "main": "dist/facebook.js",
   "scripts": {
     "start": "NODE_ENV=development node_modules/.bin/webpack-dev-server --config webpack.config.js",
     "bundle": "NODE_ENV=production node_modules/.bin/webpack -p --config webpack.config.dist.js",
-    "test": "node_modules/.bin/eslint src/**/*.js"
+    "test": "node_modules/.bin/eslint src/**/*.js",
+    "compile": "babel -d dist/ src/"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,7 @@
   "homepage": "https://github.com/keppelen/react-facebook-login",
   "devDependencies": {
     "autoprefixer": "^6.0.3",
-    "babel": "^6.5.2",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.6.5",
     "babel-eslint": "^4.1.6",
     "babel-loader": "^6.2.4",
