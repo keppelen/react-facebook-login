@@ -159,7 +159,7 @@ export default MyComponent;
 |   callback   |     function        |             resultFacebookLogin                     |
 |   autoLoad   |     boolean         |                  false                              |
 |     xfbml    |     boolean         |                  false                              |
-|reAuthenticate|     boolean         |                  false                              |
+|   authType   |     string          |                  ""                                 |
 |   textButton |     string          |           Login with Facebook                       |
 |   cssClass   |     string          | kep-login-facebook kep-login-facebook-[button-size] |
 | redirectUri  |     string          |               window.location.href (mobile-only)    |
