@@ -5,7 +5,7 @@
 ## Getting Started
 ```shell
 git clone https://github.com/keppelen/react-facebook-login.git && cd react-facebook-login
-npm install react react-dom react-facebook-login --save
+npm install react react-dom react-facebook-login --save --force
 ```
 
 ## Development
