@@ -159,6 +159,7 @@ export default MyComponent;
 |   callback   |     function        |             resultFacebookLogin                     |
 |   autoLoad   |     boolean         |                  false                              |
 |     xfbml    |     boolean         |                  false                              |
+|    cookie    |     boolean         |                  false                              |
 |reAuthenticate|     boolean         |                  false                              |
 |   textButton |     string          |           Login with Facebook                       |
 |   cssClass   |     string          | kep-login-facebook kep-login-facebook-[button-size] |
