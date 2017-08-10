@@ -116,7 +116,7 @@ see https://developers.facebook.com/docs/facebook-login/permissions for permissi
       )
     }
   }
-  
+
   export default MyComponent;
 ```
 
@@ -170,3 +170,4 @@ export default MyComponent;
 |   onClick    |     function        |                  Initial click on the component     |
 |   isMobile   |     boolean         |                  detected via userAgent             |
 |     tag      |     string          |                  HTML Element, Ex: 'a', 'button'             |
+|   onFailure  |     function        | optional function to separatere the failed init     |

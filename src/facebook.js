@@ -53,6 +53,7 @@ class FacebookLogin extends React.Component {
     containerStyle: PropTypes.object,
     buttonStyle: PropTypes.object,
     tag: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    onFailure: PropTypes.func,
   };
 
   static defaultProps = {
@@ -71,6 +72,7 @@ class FacebookLogin extends React.Component {
     disableMobileRedirect: false,
     isMobile: getIsMobile(),
     tag: 'button',
+    onFailure: null,
   };
 
   state = {
@@ -149,7 +151,9 @@ class FacebookLogin extends React.Component {
     if (response.authResponse) {
       this.responseApi(response.authResponse);
     } else {
-      if (this.props.callback) {
+      if (this.props.onFailure) {
+        this.props.onFailure({ status: response.status });
+      } else {
         this.props.callback({ status: response.status });
       }
     }
