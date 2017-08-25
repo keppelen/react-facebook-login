@@ -38,7 +38,7 @@ class FacebookLogin extends React.Component {
     reAuthenticate: PropTypes.bool,
     scope: PropTypes.string,
     redirectUri: PropTypes.string,
-    textButton: PropTypes.string,
+    textButton: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     typeButton: PropTypes.string,
     autoLoad: PropTypes.bool,
     disableMobileRedirect: PropTypes.bool,
