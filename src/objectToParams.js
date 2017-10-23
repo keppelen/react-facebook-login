@@ -4,13 +4,6 @@
  * @param      {Object} paramsObj The object needs to encode as url parameters
  * @return     {String} Encoded url parameters
  */
-export default paramsObj => {
-  let str = '';
-  for (const key in paramsObj) {
-    if (str !== '') {
-      str += '&';
-    }
-    str += `${key}=${encodeURIComponent(paramsObj[key])}`;
-  }
-  return str;
-};
+export default params => '?' + Object.keys(params)
+  .map(param => `${param}=${encodeURIComponent(params[param])}`)
+  .join('&');
