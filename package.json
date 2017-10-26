@@ -54,7 +54,7 @@
     "webpack-dev-server": "1.12.x"
   },
   "peerDependencies": {
-    "react": "^15.1.0"
+    "react": "^15.0.0-0 || ^16.0.0-0"
   },
   "babel": {
     "presets": [
