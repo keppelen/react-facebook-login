@@ -37,6 +37,7 @@ class FacebookLogin extends React.Component {
     cookie: PropTypes.bool,
     reAuthenticate: PropTypes.bool,
     scope: PropTypes.string,
+    returnScopes: PropTypes.bool,
     redirectUri: PropTypes.string,
     textButton: PropTypes.string,
     typeButton: PropTypes.string,
@@ -62,6 +63,7 @@ class FacebookLogin extends React.Component {
     typeButton: 'button',
     redirectUri: typeof window !== 'undefined' ? window.location.href : '/',
     scope: 'public_profile,email',
+    returnScopes: false,
     xfbml: false,
     cookie: false,
     reAuthenticate: false,
@@ -178,7 +180,7 @@ class FacebookLogin extends React.Component {
       return;
     }
     this.setState({ isProcessing: true });
-    const { scope, appId, onClick, reAuthenticate, redirectUri, disableMobileRedirect } = this.props;
+    const { scope, appId, onClick, reAuthenticate, returnScopes, redirectUri, disableMobileRedirect } = this.props;
 
     if (typeof onClick === 'function') {
       onClick(e);
@@ -191,6 +193,7 @@ class FacebookLogin extends React.Component {
       client_id: appId,
       redirect_uri: redirectUri,
       state: 'facebookdirect',
+      return_scopes: returnScopes,
       scope,
     };
 
@@ -201,7 +204,7 @@ class FacebookLogin extends React.Component {
     if (this.props.isMobile && !disableMobileRedirect) {
       window.location.href = `//www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
     } else {
-      window.FB.login(this.checkLoginState, { scope, auth_type: params.auth_type });
+      window.FB.login(this.checkLoginState, { scope, return_scopes: returnScopes, auth_type: params.auth_type });
     }
   };
 
