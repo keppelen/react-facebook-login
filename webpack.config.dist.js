@@ -1,5 +1,3 @@
-'use strict';
-
 var webpack = require('webpack');
 
 module.exports = {
@@ -11,7 +9,7 @@ module.exports = {
     loaders: [
       { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
       { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass'},
-    ]
+    ],
   },
 
   externals: {
@@ -31,12 +29,16 @@ module.exports = {
 
   plugins: [
     new webpack.DefinePlugin({
-      'process.env':{
+      'process.env': {
         'NODE_ENV': JSON.stringify('production'),
       },
     }),
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+    }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-  ]
+  ],
 };

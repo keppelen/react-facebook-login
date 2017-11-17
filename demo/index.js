@@ -15,7 +15,6 @@ class Base extends Component {
         <FacebookLogin
           appId="1088597931155576"
           autoLoad
-          buttonStyle={ { fontSize: 40 } }
           callback={responseFacebook}
           icon="fa-facebook"
         />
@@ -47,4 +46,3 @@ ReactDOM.render(
   </Router>,
   document.getElementById('demo')
 );
-

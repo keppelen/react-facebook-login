@@ -5,7 +5,7 @@
 ## Getting Started
 ```shell
 git clone https://github.com/keppelen/react-facebook-login.git && cd react-facebook-login
-npm install react react-dom react-facebook-login --save
+npm install react react-dom react-facebook-login --save --force
 ```
 
 ## Development
@@ -100,13 +100,9 @@ see https://developers.facebook.com/docs/facebook-login/permissions for permissi
   import FacebookLogin from 'react-facebook-login';
 
   class MyComponent extends React.Component {
-    constructor(props) {
-        super(props);
-    };
-
-    responseFacebook = (response) => {
+    responseFacebook(response) {
       console.log(response);
-    };
+    }
 
     render() {
       return (
@@ -115,11 +111,13 @@ see https://developers.facebook.com/docs/facebook-login/permissions for permissi
           autoLoad={true}
           fields="name,email,picture"
           scope="public_profile,user_friends,user_actions.books"
-          callback={responseFacebook}
+          callback={this.responseFacebook}
         />
       )
     }
   }
+
+  export default MyComponent;
 ```
 
 ### Server
@@ -130,13 +128,9 @@ import React from 'react';
 import FacebookLogin from 'react-facebook-login';
 
 class MyComponent extends React.Component {
-  constructor(props) {
-      super(props);
-  };
-
-  responseFacebook = (response) => {
-    console.log(response);
-  };
+  responseFacebook(response) {
+    console.log(response)
+  }
 
   render() {
     return (
@@ -144,7 +138,7 @@ class MyComponent extends React.Component {
         appId="1088597931155576"
         autoLoad={true}
         fields="name,email,picture"
-        callback={responseFacebook}
+        callback={this.responseFacebook}
       />
     )
   }
@@ -165,6 +159,7 @@ export default MyComponent;
 |   callback   |     function        |             resultFacebookLogin                     |
 |   autoLoad   |     boolean         |                  false                              |
 |     xfbml    |     boolean         |                  false                              |
+|    cookie    |     boolean         |                  false                              |
 |reAuthenticate|     boolean         |                  false                              |
 |   textButton |     string          |           Login with Facebook                       |
 |   cssClass   |     string          | kep-login-facebook kep-login-facebook-[button-size] |
@@ -173,3 +168,6 @@ export default MyComponent;
 |   icon       |     string|element  |                  none                               |
 |   language   |     string          |                  en_US                              |
 |   onClick    |     function        |                  Initial click on the component     |
+|   isMobile   |     boolean         |                  detected via userAgent             |
+|     tag      |     string          |                  HTML Element, Ex: 'a', 'button'             |
+|   onFailure  |     function        | optional function to separatere the failed init     |
