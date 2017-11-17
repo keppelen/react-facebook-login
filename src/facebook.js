@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/facebook.scss';
-import objectToParams from './objectToParams';
+import getParamsFromObject from './objectToParams';
 
 const getIsMobile = () => {
   let isMobile = false;
@@ -53,7 +53,9 @@ class FacebookLogin extends React.Component {
     onClick: PropTypes.func,
     containerStyle: PropTypes.object,
     buttonStyle: PropTypes.object,
+    children: React.PropTypes.node,
     tag: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+    onFailure: PropTypes.func,
   };
 
   static defaultProps = {
@@ -73,6 +75,7 @@ class FacebookLogin extends React.Component {
     disableMobileRedirect: false,
     isMobile: getIsMobile(),
     tag: 'button',
+    onFailure: null,
   };
 
   state = {
@@ -93,6 +96,11 @@ class FacebookLogin extends React.Component {
       fbRoot = document.createElement('div');
       fbRoot.id = 'fb-root';
       document.body.appendChild(fbRoot);
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.state.isSdkLoaded && nextProps.autoLoad && ! this.props.autoLoad) {
+      window.FB.getLoginStatus(this.checkLoginAfterRefresh);
     }
   }
 
@@ -151,7 +159,9 @@ class FacebookLogin extends React.Component {
     if (response.authResponse) {
       this.responseApi(response.authResponse);
     } else {
-      if (this.props.callback) {
+      if (this.props.onFailure) {
+        this.props.onFailure({ status: response.status });
+      } else {
         this.props.callback({ status: response.status });
       }
     }
@@ -192,7 +202,7 @@ class FacebookLogin extends React.Component {
     }
 
     if (this.props.isMobile && !disableMobileRedirect) {
-      window.location.href = `//www.facebook.com/dialog/oauth?${objectToParams(params)}`;
+      window.location.href = `//www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
     } else {
       window.FB.login(this.checkLoginState, { scope, return_scopes: returnScopes, auth_type: params.auth_type });
     }
@@ -215,7 +225,7 @@ class FacebookLogin extends React.Component {
     return Object.assign(style, this.props.containerStyle);
   }
 
-  render() {
+  renderOwnButton() {
     const { cssClass, size, icon, textButton, typeButton, buttonStyle } = this.props;
     const isIconString = typeof icon === 'string';
     const optionalProps = {};
@@ -246,6 +256,11 @@ class FacebookLogin extends React.Component {
         {this.style()}
       </span>
     );
+  }
+
+  render() {
+    const { children } = this.props;
+    return children ? <span onClick={this.click}>{ children }</span> : this.renderOwnButton();
   }
 }
 
