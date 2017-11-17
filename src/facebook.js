@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/facebook.scss';
-import objectToParams from './objectToParams';
+import getParamsFromObject from './objectToParams';
 
 const getIsMobile = () => {
   let isMobile = false;
@@ -199,7 +199,7 @@ class FacebookLogin extends React.Component {
     }
 
     if (this.props.isMobile && !disableMobileRedirect) {
-      window.location.href = `//www.facebook.com/dialog/oauth?${objectToParams(params)}`;
+      window.location.href = `//www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
     } else {
       window.FB.login(this.checkLoginState, { scope, auth_type: params.auth_type });
     }
