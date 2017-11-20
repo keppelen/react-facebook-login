@@ -157,6 +157,7 @@ export default MyComponent;
 |     scope    |     string          |      public_profile, email, user_birthday           |
 |     fields   |     string          |              name,email,picture                     |
 |   callback   |     function        |             resultFacebookLogin                     |
+| returnScopes |     boolean         |                  false                              |
 |   autoLoad   |     boolean         |                  false                              |
 |     xfbml    |     boolean         |                  false                              |
 |    cookie    |     boolean         |                  false                              |
