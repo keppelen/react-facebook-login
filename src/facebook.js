@@ -53,7 +53,7 @@ class FacebookLogin extends React.Component {
     onClick: PropTypes.func,
     containerStyle: PropTypes.object,
     buttonStyle: PropTypes.object,
-    children: React.PropTypes.node,
+    children: PropTypes.node,
     tag: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     onFailure: PropTypes.func,
   };
