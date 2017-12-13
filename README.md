@@ -150,25 +150,26 @@ export default MyComponent;
 
 ## Parameters
 
-|    params    |     value           |                default value                        |
-|:------------:|:-------------------:|:---------------------------------------------------:|
-|     appId    |     string          |                Required                             |
-|     size     |     string          |              small - medium - metro                 |
-|     scope    |     string          |      public_profile, email, user_birthday           |
-|     fields   |     string          |              name,email,picture                     |
-|   callback   |     function        |             resultFacebookLogin                     |
-| returnScopes |     boolean         |                  false                              |
-|   autoLoad   |     boolean         |                  false                              |
-|     xfbml    |     boolean         |                  false                              |
-|    cookie    |     boolean         |                  false                              |
-|reAuthenticate|     boolean         |                  false                              |
-|   textButton |     string          |           Login with Facebook                       |
-|   cssClass   |     string          | kep-login-facebook kep-login-facebook-[button-size] |
-| redirectUri  |     string          |               window.location.href (mobile-only)    |
-|   version    |     string          |                  2.3                                |
-|   icon       |     string|element  |                  none                               |
-|   language   |     string          |                  en_US                              |
-|   onClick    |     function        |                  Initial click on the component     |
-|   isMobile   |     boolean         |                  detected via userAgent             |
-|     tag      |     string          |                  HTML Element, Ex: 'a', 'button'             |
-|   onFailure  |     function        | optional function to separatere the failed init     |
+|        params         |     value      |                    default value                    |                         Notes                          |
+|:---------------------:|:--------------:|:---------------------------------------------------:|:------------------------------------------------------:|
+|         appId         |     string     |                      Required                       |                                                        |
+|         size          |     string     |               small - medium - metro                |                                                        |
+|         scope         |     string     |        public_profile, email, user_birthday         |                                                        |
+|        fields         |     string     |                 name,email,picture                  |                                                        |
+|       callback        |    function    |                 resultFacebookLogin                 |                                                        |
+|     returnScopes      |    boolean     |                        false                        |                                                        |
+|       autoLoad        |    boolean     |                        false                        |                                                        |
+|         xfbml         |    boolean     |                        false                        |                                                        |
+|        cookie         |    boolean     |                        false                        |                                                        |
+|    reAuthenticate     |    boolean     |                        false                        |                                                        |
+|      textButton       |     string     |                 Login with Facebook                 |                                                        |
+|       cssClass        |     string     | kep-login-facebook kep-login-facebook-[button-size] |                                                        |
+|      redirectUri      |     string     |         window.location.href (mobile-only)          |                                                        |
+|        version        |     string     |                         2.3                         |                                                        |
+|         icon          | string/element |                        none                         |                                                        |
+|       language        |     string     |                        en_US                        |                                                        |
+|        onClick        |    function    |           Initial click on the component            |                                                        |
+|       isMobile        |    boolean     |               detected via userAgent                |                                                        |
+| disableMobileRedirect |    boolean     |                        false                        | set to true for popup authentication on mobile devices |
+|          tag          |     string     |           HTML Element, Ex: 'a', 'button'           |                                                        |
+|       onFailure       |    function    |   optional function to separatere the failed init   |                           |                            |
