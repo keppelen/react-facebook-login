@@ -184,19 +184,19 @@ class FacebookLogin extends React.Component {
   };
 
   render() {
-    const { render } = this.props
+    const { render } = this.props;
 
-    if (render) {
-      const propsForRender = {
-        onClick: this.click,
-        isDisabled: !!this.props.isDisabled,
-        isProcessing: this.state.isProcessing,
-        isSdkLoaded: this.state.isSdkLoaded,
-      }
-      return this.props.render(propsForRender)
-    } else {
-      throw new Error('ReactFacebookLogin requires a render prop to render')
+    if (!render) {
+      throw new Error('ReactFacebookLogin requires a render prop to render');
     }
+
+    const propsForRender = {
+      onClick: this.click,
+      isDisabled: !!this.props.isDisabled,
+      isProcessing: this.state.isProcessing,
+      isSdkLoaded: this.state.isSdkLoaded,
+    };
+    return this.props.render(propsForRender);
   }
 }
 

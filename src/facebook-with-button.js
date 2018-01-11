@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/facebook.scss';
-import FacebookLogin from './facebook'
+import FacebookLogin from './facebook';
 
 // https://www.w3.org/TR/html5/disabled-elements.html#disabled-elements
 const _shouldAddDisabledProp = (tag) => [
@@ -45,7 +45,7 @@ class ReactFacebookLoginWithButton extends React.Component {
   }
 
   containerStyle(renderProps) {
-    const { isProcessing, isSdkLoaded, isDisabled } = renderProps
+    const { isProcessing, isSdkLoaded, isDisabled } = renderProps;
 
     const style = { transition: 'opacity 0.5s' };
     if (isProcessing || !isSdkLoaded || isDisabled) {
@@ -57,7 +57,7 @@ class ReactFacebookLoginWithButton extends React.Component {
   renderOwnButton(renderProps) {
     const { cssClass, size, icon, textButton, typeButton, buttonStyle } = this.props;
 
-    const { onClick, isDisabled } = renderProps
+    const { onClick, isDisabled } = renderProps;
 
     const isIconString = typeof icon === 'string';
     const optionalProps = {};
@@ -93,7 +93,7 @@ class ReactFacebookLoginWithButton extends React.Component {
   render() {
     return (
       <FacebookLogin {...this.props} render={renderProps => this.renderOwnButton(renderProps)} />
-    )
+    );
   }
 }
 
