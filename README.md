@@ -172,3 +172,4 @@ export default MyComponent;
 |   isMobile   |     boolean         |                  detected via userAgent             |
 |     tag      |     string          |                  HTML Element, Ex: 'a', 'button'             |
 |   onFailure  |     function        | optional function to separatere the failed init     |
+|   state  |     string        | optional string to maintain state between the request and callback. This parameter should be used for preventing Cross-site Request Forgery and will be passed back to you, unchanged, in your redirect URI     |
