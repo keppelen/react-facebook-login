@@ -2,7 +2,7 @@
   "name": "react-facebook-login",
   "version": "3.7.2",
   "description": "A Component React for Facebook Login",
-  "main": "dist/facebook-login.js",
+  "main": "dist/facebook-login-with-button.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development node_modules/.bin/webpack-dev-server --config webpack.config.js",
     "bundle": "cross-env NODE_ENV=production node_modules/.bin/webpack -p --config webpack.config.dist.js",
