@@ -79,7 +79,7 @@ class FacebookLogin extends React.Component {
     tag: 'button',
     onFailure: null,
     state: 'facebookdirect',
-    responseType: 'code'
+    responseType: 'code',
   };
 
   state = {
