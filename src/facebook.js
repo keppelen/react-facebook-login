@@ -35,7 +35,7 @@ class FacebookLogin extends React.Component {
     appId: PropTypes.string.isRequired,
     xfbml: PropTypes.bool,
     cookie: PropTypes.bool,
-    reAuthenticate: PropTypes.bool,
+    authType: PropTypes.bool,
     scope: PropTypes.string,
     state: PropTypes.string,
     responseType: PropTypes.string,
@@ -68,7 +68,7 @@ class FacebookLogin extends React.Component {
     returnScopes: false,
     xfbml: false,
     cookie: false,
-    reAuthenticate: false,
+    authType: '',
     size: 'metro',
     fields: 'name',
     cssClass: 'kep-login-facebook',
@@ -184,7 +184,7 @@ class FacebookLogin extends React.Component {
       return;
     }
     this.setState({ isProcessing: true });
-    const { scope, appId, onClick, reAuthenticate, returnScopes, responseType, redirectUri, disableMobileRedirect, state } = this.props;
+    const { scope, appId, onClick, returnScopes, responseType, redirectUri, disableMobileRedirect, authType, state } = this.props;
 
     if (typeof onClick === 'function') {
       onClick(e);
@@ -194,18 +194,15 @@ class FacebookLogin extends React.Component {
     }
 
     const params = {
-    
+
       client_id: appId,
       redirect_uri: redirectUri,
       state,
       return_scopes: returnScopes,
       scope,
-      response_type: responseType
+      response_type: responseType,
+      auth_type: authType,
     };
-
-    if (reAuthenticate) {
-      params.auth_type = 'reauthenticate';
-    }
 
     if (this.props.isMobile && !disableMobileRedirect) {
       window.location.href = `//www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
