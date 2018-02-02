@@ -3,21 +3,23 @@
 > A Component React for Facebook Login
 
 ## Getting Started
+
+- `yarn add react-facebook-login` or `npm install react-facebook-login`
+- Your application will also need `react-dom` and `react` installed.
+
+## Development
+
 ```shell
 git clone https://github.com/keppelen/react-facebook-login.git && cd react-facebook-login
 npm install react react-dom react-facebook-login --save --force
-```
-
-## Development
-```shell
 npm start
 ```
-
 - navigate to [localhost:8080](http://localhost:8080)
 
 ## How to use
 
-### Basic
+### Basic button with styling
+
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -38,7 +40,37 @@ ReactDOM.render(
 );
 ```
 
+### Facebook button without styling
+
+If you're providing all your own custom styling, you can use the render prop build. This build doesn't include any CSS or additional code needed to customise the look of the button, and instead leaves that entirely up to you. You can see an example of this in `demo/index.js`.
+
+To make sure you import the right version, you will need to update your import line:
+
+```js
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+```
+
+```
+<FacebookLogin
+  appId="1088597931155576"
+  autoLoad
+  callback={responseFacebook}
+  render={renderProps => (
+    <button onClick={renderProps.onClick}>This is my custom FB button</button>
+  )}
+/>
+```
+
+The `render` function will be passed the following properties for you to use:
+
+- `onClick`
+- `isDisabled`
+- `isProcessing`
+- `isSdkLoaded`
+
+
 ### Custom CSS Class and Icon
+
 By default fontawesome is included, If you don't want to use default fontawesome icons, you can send an element in icon attribute
 
 Fontawesome example:
