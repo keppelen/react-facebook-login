@@ -99,7 +99,7 @@ class FacebookLogin extends React.Component {
         cookie,
       });
       this.setStateIfMounted({ isSdkLoaded: true });
-      if (autoLoad || window.location.search.includes('facebookdirect')) {
+      if (autoLoad || window.location.search.indexOf('facebookdirect') !== -1) {
         window.FB.getLoginStatus(this.checkLoginAfterRefresh);
       }
     };
