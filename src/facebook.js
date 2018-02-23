@@ -23,8 +23,10 @@ class FacebookLogin extends React.Component {
     appId: PropTypes.string.isRequired,
     xfbml: PropTypes.bool,
     cookie: PropTypes.bool,
-    reAuthenticate: PropTypes.bool,
+    authType: PropTypes.bool,
     scope: PropTypes.string,
+    state: PropTypes.string,
+    responseType: PropTypes.string,
     returnScopes: PropTypes.bool,
     redirectUri: PropTypes.string,
     autoLoad: PropTypes.bool,
@@ -44,13 +46,15 @@ class FacebookLogin extends React.Component {
     returnScopes: false,
     xfbml: false,
     cookie: false,
-    reAuthenticate: false,
+    authType: '',
     fields: 'name',
     version: '2.3',
     language: 'en_US',
     disableMobileRedirect: false,
     isMobile: getIsMobile(),
     onFailure: null,
+    state: 'facebookdirect',
+    responseType: 'code',
   };
 
   state = {
@@ -90,7 +94,7 @@ class FacebookLogin extends React.Component {
   }
 
   setFbAsyncInit() {
-    const { appId, xfbml, cookie, version, autoLoad } = this.props;
+    const { appId, xfbml, cookie, version, autoLoad, state } = this.props;
     window.fbAsyncInit = () => {
       window.FB.init({
         version: `v${version}`,
@@ -99,7 +103,7 @@ class FacebookLogin extends React.Component {
         cookie,
       });
       this.setStateIfMounted({ isSdkLoaded: true });
-      if (autoLoad || window.location.search.indexOf('facebookdirect') !== -1) {
+      if (autoLoad || window.location.search.indexOf(state) !== -1) {
         window.FB.getLoginStatus(this.checkLoginAfterRefresh);
       }
     };
@@ -155,7 +159,7 @@ class FacebookLogin extends React.Component {
       return;
     }
     this.setState({ isProcessing: true });
-    const { scope, appId, onClick, reAuthenticate, returnScopes, redirectUri, disableMobileRedirect } = this.props;
+    const { scope, appId, onClick, returnScopes, responseType, redirectUri, disableMobileRedirect, authType, state } = this.props;
 
     if (typeof onClick === 'function') {
       onClick(e);
@@ -165,16 +169,15 @@ class FacebookLogin extends React.Component {
     }
 
     const params = {
+
       client_id: appId,
       redirect_uri: redirectUri,
-      state: 'facebookdirect',
+      state,
       return_scopes: returnScopes,
       scope,
+      response_type: responseType,
+      auth_type: authType,
     };
-
-    if (reAuthenticate) {
-      params.auth_type = 'reauthenticate';
-    }
 
     if (this.props.isMobile && !disableMobileRedirect) {
       window.location.href = `//www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
