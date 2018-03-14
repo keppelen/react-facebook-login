@@ -61,7 +61,7 @@ class FacebookLogin extends React.Component {
     isSdkLoaded: false,
     isProcessing: false,
     isLoggingIn: false,
-    isCheckingStatus: this.props.autoLoad
+    isCheckingStatus: this.props.autoLoad,
   };
 
   componentDidMount() {
@@ -111,6 +111,11 @@ class FacebookLogin extends React.Component {
     };
   }
 
+  getLoginStatus(callback) {
+    this.setStateIfMounted({ isCheckingStatus: true });
+    window.FB.getLoginStatus(callback);
+  }
+
   sdkLoaded() {
     this.setState({ isSdkLoaded: true });
   }
@@ -157,11 +162,6 @@ class FacebookLogin extends React.Component {
       window.FB.login(loginResponse => this.checkLoginState(loginResponse), true);
     }
   };
-
-  getLoginStatus(callback) {
-    this.setStateIfMounted({isCheckingStatus: true});
-    window.FB.getLoginStatus(callback);
-  }
 
   click = (e) => {
     if (!this.state.isSdkLoaded || this.state.isProcessing || this.props.isDisabled) {
