@@ -60,6 +60,8 @@ class FacebookLogin extends React.Component {
   state = {
     isSdkLoaded: false,
     isProcessing: false,
+    isLoggingIn: false,
+    isCheckingStatus: this.props.autoLoad
   };
 
   componentDidMount() {
@@ -79,7 +81,7 @@ class FacebookLogin extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.state.isSdkLoaded && nextProps.autoLoad && ! this.props.autoLoad) {
-      window.FB.getLoginStatus(this.checkLoginAfterRefresh);
+      this.getLoginStatus(this.checkLoginAfterRefresh);
     }
   }
 
@@ -104,7 +106,7 @@ class FacebookLogin extends React.Component {
       });
       this.setStateIfMounted({ isSdkLoaded: true });
       if (autoLoad || window.location.search.indexOf(state) !== -1) {
-        window.FB.getLoginStatus(this.checkLoginAfterRefresh);
+        this.getLoginStatus(this.checkLoginAfterRefresh);
       }
     };
   }
@@ -127,14 +129,16 @@ class FacebookLogin extends React.Component {
   }
 
   responseApi = (authResponse) => {
+    this.setStateIfMounted({ isLoggingIn: true });
     window.FB.api('/me', { locale: this.props.language, fields: this.props.fields }, (me) => {
       Object.assign(me, authResponse);
       this.props.callback(me);
+      this.setStateIfMounted({ isLoggingIn: false });
     });
   };
 
   checkLoginState = (response) => {
-    this.setStateIfMounted({ isProcessing: false });
+    this.setStateIfMounted({ isProcessing: false, isCheckingStatus: false });
     if (response.authResponse) {
       this.responseApi(response.authResponse);
     } else {
@@ -153,6 +157,11 @@ class FacebookLogin extends React.Component {
       window.FB.login(loginResponse => this.checkLoginState(loginResponse), true);
     }
   };
+
+  getLoginStatus(callback) {
+    this.setStateIfMounted({isCheckingStatus: true});
+    window.FB.getLoginStatus(callback);
+  }
 
   click = (e) => {
     if (!this.state.isSdkLoaded || this.state.isProcessing || this.props.isDisabled) {
@@ -198,6 +207,8 @@ class FacebookLogin extends React.Component {
       isDisabled: !!this.props.isDisabled,
       isProcessing: this.state.isProcessing,
       isSdkLoaded: this.state.isSdkLoaded,
+      isCheckingStatus: this.state.isCheckingStatus,
+      isLoggingIn: this.state.isLoggingIn,
     };
     return this.props.render(propsForRender);
   }
