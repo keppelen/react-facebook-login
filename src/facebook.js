@@ -164,6 +164,7 @@ class FacebookLogin extends React.Component {
     if (typeof onClick === 'function') {
       onClick(e);
       if (e.defaultPrevented) {
+        this.setState({ isProcessing: false });
         return;
       }
     }
