@@ -23,7 +23,7 @@ class FacebookLogin extends React.Component {
     appId: PropTypes.string.isRequired,
     xfbml: PropTypes.bool,
     cookie: PropTypes.bool,
-    authType: PropTypes.bool,
+    authType: PropTypes.string,
     scope: PropTypes.string,
     state: PropTypes.string,
     responseType: PropTypes.string,
