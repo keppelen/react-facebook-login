@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getParamsFromObject from './objectToParams';
+import decodeParamForKey from './decodeParam';
 
 const getIsMobile = () => {
   let isMobile = false;
@@ -94,7 +95,7 @@ class FacebookLogin extends React.Component {
   }
 
   setFbAsyncInit() {
-    const { appId, xfbml, cookie, version, autoLoad, state } = this.props;
+    const { appId, xfbml, cookie, version, autoLoad } = this.props;
     window.fbAsyncInit = () => {
       window.FB.init({
         version: `v${version}`,
@@ -103,10 +104,18 @@ class FacebookLogin extends React.Component {
         cookie,
       });
       this.setStateIfMounted({ isSdkLoaded: true });
-      if (autoLoad || window.location.search.indexOf(state) !== -1) {
+      if (autoLoad || this.isRedirectedFromFb()) {
         window.FB.getLoginStatus(this.checkLoginAfterRefresh);
       }
     };
+  }
+
+  isRedirectedFromFb() {
+    const params = window.location.search;
+    return (
+      decodeParamForKey(params, 'code') ||
+      decodeParamForKey(params, 'granted_scopes')
+    );
   }
 
   sdkLoaded() {
