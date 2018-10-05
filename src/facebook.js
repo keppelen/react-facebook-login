@@ -191,6 +191,14 @@ class FacebookLogin extends React.Component {
     if (this.props.isMobile && !disableMobileRedirect) {
       window.location.href = `https://www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
     } else {
+      if (!window.FB) {
+        if (this.props.onFailure) {
+          this.props.onFailure({ status: 'facebookNotLoaded' });
+        }
+
+        return;
+      }
+
       window.FB.login(this.checkLoginState, { scope, return_scopes: returnScopes, auth_type: params.auth_type });
     }
   };
