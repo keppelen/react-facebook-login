@@ -196,7 +196,7 @@ export default MyComponent;
 |   textButton |     string          |           Login with Facebook                       |
 |   cssClass   |     string          | kep-login-facebook kep-login-facebook-[button-size] |
 | redirectUri  |     string          |               window.location.href (mobile-only)    |
-|   version    |     string          |                  2.3                                |
+|   version    |     string          |                  3.1                                |
 |   icon       |     string|element  |                  none                               |
 |   language   |     string          |                  en_US                              |
 |   onClick    |     function        |                  Initial click on the component     |

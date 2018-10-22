@@ -49,7 +49,7 @@ class FacebookLogin extends React.Component {
     cookie: false,
     authType: '',
     fields: 'name',
-    version: '2.3',
+    version: '3.1',
     language: 'en_US',
     disableMobileRedirect: false,
     isMobile: getIsMobile(),
