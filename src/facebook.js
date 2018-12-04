@@ -123,6 +123,10 @@ class FacebookLogin extends React.Component {
   }
 
   loadSdkAsynchronously() {
+    if (!document.scripts.length) {
+      return;
+    }
+
     const { language } = this.props;
     ((d, s, id) => {
       const element = d.getElementsByTagName(s)[0];
