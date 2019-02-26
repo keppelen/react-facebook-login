@@ -19,8 +19,6 @@ class FacebookAuth extends React.Component {
     fields: PropTypes.string,
     version: PropTypes.string,
     language: PropTypes.string,
-    onLoginClick: PropTypes.func,
-    onLogoutClick: PropTypes.func,
     onFailure: PropTypes.func,
     loginJSX: PropTypes.node.isRequired,
     logoutJSX: PropTypes.node.isRequired,
@@ -193,14 +191,6 @@ class FacebookAuth extends React.Component {
 
     const { scope, onLoginClick, returnScopes, authType } = this.props;
 
-    if (typeof onLoginClick === 'function') {
-      onLoginClick(e);
-
-      if (e.defaultPrevented) {
-        return;
-      }
-    }
-
     if (!window.FB) {
       if (this.props.onFailure) {
         this.props.onFailure({ status: 'facebookNotLoaded' });
@@ -226,16 +216,6 @@ class FacebookAuth extends React.Component {
     }
 
     this.setState({ isProcessing: true });
-
-    const { onLogoutClick } = this.props;
-
-    if (typeof onLogoutClick === 'function') {
-      onLogoutClick(e);
-
-      if (e.defaultPrevented) {
-        return;
-      }
-    }
 
     if (!window.FB) {
       if (this.props.onFailure) {
