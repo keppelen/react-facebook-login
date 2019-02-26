@@ -19,7 +19,7 @@ class Base extends Component {
             box)
           </p>
           <FacebookAuth
-            appId="330164834292470"
+            appId="332341234834470"
             autoLoad
             callback={responseFacebook}
             loginJSX={<button>This is my custom FB Login button</button>}

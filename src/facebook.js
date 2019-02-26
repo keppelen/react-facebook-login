@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import decodeParamForKey from './decodeParam';
+import classnames from 'classnames';
 
 class FacebookAuth extends React.Component {
   static propTypes = {
@@ -245,9 +246,23 @@ class FacebookAuth extends React.Component {
     };
 
     return !isLoggedIn ? (
-      <div onClick={propsForRender.onLoginClick}>{loginJSX}</div>
+      <div
+        className={classnames({
+          disabled: isDisabled,
+        })}
+        onClick={propsForRender.onLoginClick}
+      >
+        {loginJSX}
+      </div>
     ) : (
-      <div onClick={propsForRender.onLogoutClick}>{logoutJSX}</div>
+      <div
+        className={classnames({
+          disabled: isDisabled,
+        })}
+        onClick={propsForRender.onLogoutClick}
+      >
+        {logoutJSX}
+      </div>
     );
   }
 }

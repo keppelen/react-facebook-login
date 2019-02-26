@@ -1,17 +1,35 @@
-const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
-    'with-button': ['./src/facebook-with-button.js'],
-    'render-props': ['./src/facebook.js'],
+    main: ['./src/facebook.js'],
   },
 
   module: {
-    loaders: [
-      { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
+    rules: [
       {
-        test: /\.scss$/,
-        loader: 'css?modules&localIdentName=[local]!postcss!sass',
+        oneOf: [
+          {
+            test: /\.js$/,
+            loader: require.resolve('babel-loader'),
+            exclude: /node_modules/,
+          },
+          {
+            test: /\.scss$/,
+            use: [
+              {
+                loader: 'style-loader',
+              },
+              {
+                loader: 'css-loader',
+              },
+              {
+                loader: 'sass-loader',
+              },
+            ],
+            exclude: /node_modules/,
+          },
+        ],
       },
     ],
   },
@@ -22,27 +40,28 @@ module.exports = {
   },
 
   output: {
-    filename: 'dist/facebook-auth-[name].js',
+    filename: 'facebook-auth-[name].js',
     libraryTarget: 'umd',
     library: 'FacebookLogin',
   },
 
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['.js', '.jsx'],
   },
 
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-  ],
+  optimization: {
+    minimizer: [
+      // we specify a custom UglifyJsPlugin here to get source maps in production
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        uglifyOptions: {
+          compress: false,
+          ecma: 6,
+          mangle: true,
+        },
+        sourceMap: true,
+      }),
+    ],
+  },
 };
