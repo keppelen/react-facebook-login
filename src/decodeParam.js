@@ -11,10 +11,11 @@ export default (paramString, key) => {
     paramString.replace(
       new RegExp(
         '^(?:.*[&\\?]' +
-        encodeURIComponent(key).replace(/[\.\+\*]/g, '\\$&') +
-        '(?:\\=([^&]*))?)?.*$', 'i'
+          encodeURIComponent(key).replace(/[.+*]/g, '\\$&') +
+          '(?:\\=([^&]*))?)?.*$',
+        'i',
       ),
-      '$1'
-    )
+      '$1',
+    ),
   );
 };

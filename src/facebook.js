@@ -1,23 +1,8 @@
-// @flow
 import React from 'react';
 import PropTypes from 'prop-types';
-import getParamsFromObject from './objectToParams';
 import decodeParamForKey from './decodeParam';
 
-const getIsMobile = () => {
-  let isMobile = false;
-
-  try {
-    isMobile = !!((window.navigator && window.navigator.standalone) || navigator.userAgent.match('CriOS') || navigator.userAgent.match(/mobile/i));
-  } catch (ex) {
-    // continue regardless of error
-  }
-
-  return isMobile;
-};
-
-class FacebookLogin extends React.Component {
-
+class FacebookAuth extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
     callback: PropTypes.func.isRequired,
@@ -31,14 +16,14 @@ class FacebookLogin extends React.Component {
     returnScopes: PropTypes.bool,
     redirectUri: PropTypes.string,
     autoLoad: PropTypes.bool,
-    disableMobileRedirect: PropTypes.bool,
-    isMobile: PropTypes.bool,
     fields: PropTypes.string,
     version: PropTypes.string,
     language: PropTypes.string,
-    onClick: PropTypes.func,
+    onLoginClick: PropTypes.func,
+    onLogoutClick: PropTypes.func,
     onFailure: PropTypes.func,
-    render: PropTypes.func.isRequired,
+    loginJSX: PropTypes.node.isRequired,
+    logoutJSX: PropTypes.node.isRequired,
   };
 
   static defaultProps = {
@@ -52,16 +37,20 @@ class FacebookLogin extends React.Component {
     version: '3.1',
     language: 'en_US',
     disableMobileRedirect: false,
-    isMobile: getIsMobile(),
     onFailure: null,
     state: 'facebookdirect',
     responseType: 'code',
   };
 
-  state = {
-    isSdkLoaded: false,
-    isProcessing: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isSdkLoaded: false,
+      isProcessing: false,
+      isLoggedIn: false,
+    };
+  }
 
   componentDidMount() {
     this._isMounted = true;
@@ -79,7 +68,7 @@ class FacebookLogin extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (this.state.isSdkLoaded && nextProps.autoLoad && ! this.props.autoLoad) {
+    if (this.state.isSdkLoaded && nextProps.autoLoad && !this.props.autoLoad) {
       window.FB.getLoginStatus(this.checkLoginAfterRefresh);
     }
   }
@@ -128,24 +117,32 @@ class FacebookLogin extends React.Component {
       const element = d.getElementsByTagName(s)[0];
       const fjs = element;
       let js = element;
-      if (d.getElementById(id)) { return; }
-      js = d.createElement(s); js.id = id;
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
       js.src = `https://connect.facebook.net/${language}/sdk.js`;
       fjs.parentNode.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk');
   }
 
-  responseApi = (authResponse) => {
-    window.FB.api('/me', { locale: this.props.language, fields: this.props.fields }, (me) => {
-      Object.assign(me, authResponse);
-      this.props.callback(me);
-    });
+  responseApi = authResponse => {
+    window.FB.api(
+      '/me',
+      { locale: this.props.language, fields: this.props.fields },
+      me => {
+        Object.assign(me, authResponse);
+        this.props.callback(me);
+      },
+    );
   };
 
-  checkLoginState = (response) => {
-    this.setStateIfMounted({ isProcessing: false });
+  checkLoginState = response => {
+    let isLoggedIn = false;
     if (response.authResponse) {
       this.responseApi(response.authResponse);
+      isLoggedIn = true;
     } else {
       if (this.props.onFailure) {
         this.props.onFailure({ status: response.status });
@@ -153,71 +150,126 @@ class FacebookLogin extends React.Component {
         this.props.callback({ status: response.status });
       }
     }
+
+    this.setState({ isProcessing: false, isLoggedIn });
   };
 
-  checkLoginAfterRefresh = (response) => {
+  checkoutLogoutState = response => {
+    let isLoggedIn = true;
+
+    if (response.authResponse) {
+      isLoggedIn = false;
+    } else {
+      if (this.props.onFailure) {
+        this.props.onFailure({ status: response.status });
+      } else {
+        this.props.callback({ status: response.status });
+      }
+    }
+
+    this.setState({ isProcessing: false, isLoggedIn });
+  };
+
+  checkLoginAfterRefresh = response => {
     if (response.status === 'connected') {
       this.checkLoginState(response);
     } else {
-      window.FB.login(loginResponse => this.checkLoginState(loginResponse), true);
+      window.FB.login(
+        loginResponse => this.checkLoginState(loginResponse),
+        true,
+      );
     }
   };
 
-  click = (e) => {
-    if (!this.state.isSdkLoaded || this.state.isProcessing || this.props.isDisabled) {
+  handleLoginClick = e => {
+    if (
+      !this.state.isSdkLoaded ||
+      this.state.isProcessing ||
+      this.props.isDisabled
+    ) {
       return;
     }
     this.setState({ isProcessing: true });
-    const { scope, appId, onClick, returnScopes, responseType, redirectUri, disableMobileRedirect, authType, state } = this.props;
 
-    if (typeof onClick === 'function') {
-      onClick(e);
+    const { scope, onLoginClick, returnScopes, authType } = this.props;
+
+    if (typeof onLoginClick === 'function') {
+      onLoginClick(e);
+
       if (e.defaultPrevented) {
         return;
       }
     }
 
-    const params = {
-
-      client_id: appId,
-      redirect_uri: redirectUri,
-      state,
-      return_scopes: returnScopes,
-      scope,
-      response_type: responseType,
-      auth_type: authType,
-    };
-
-    if (this.props.isMobile && !disableMobileRedirect) {
-      window.location.href = `https://www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
-    } else {
-      if (!window.FB) {
-        if (this.props.onFailure) {
-          this.props.onFailure({ status: 'facebookNotLoaded' });
-        }
-
-        return;
+    if (!window.FB) {
+      if (this.props.onFailure) {
+        this.props.onFailure({ status: 'facebookNotLoaded' });
       }
 
-      window.FB.login(this.checkLoginState, { scope, return_scopes: returnScopes, auth_type: params.auth_type });
+      return;
     }
+
+    window.FB.login(this.checkLoginState, {
+      scope,
+      return_scopes: returnScopes,
+      auth_type: authType,
+    });
+  };
+
+  handleLogoutClick = e => {
+    if (
+      !this.state.isSdkLoaded ||
+      this.state.isProcessing ||
+      this.props.isDisabled
+    ) {
+      return;
+    }
+
+    this.setState({ isProcessing: true });
+
+    const { onLogoutClick } = this.props;
+
+    if (typeof onLogoutClick === 'function') {
+      onLogoutClick(e);
+
+      if (e.defaultPrevented) {
+        return;
+      }
+    }
+
+    if (!window.FB) {
+      if (this.props.onFailure) {
+        this.props.onFailure({ status: 'facebookNotLoaded' });
+      }
+
+      return;
+    }
+
+    window.FB.logout(this.checkoutLogoutState);
   };
 
   render() {
-    const { render } = this.props;
+    const { loginJSX, logoutJSX } = this.props;
+    const { isLoggedIn } = this.state;
 
-    if (!render) {
+    if (!(loginJSX || logoutJSX)) {
       throw new Error('ReactFacebookLogin requires a render prop to render');
     }
 
     const propsForRender = {
-      onClick: this.click,
+      onLoginClick: this.handleLoginClick,
+      onLogoutClick: this.handleLogoutClick,
       isDisabled: !!this.props.isDisabled,
       isProcessing: this.state.isProcessing,
       isSdkLoaded: this.state.isSdkLoaded,
     };
-    return this.props.render(propsForRender);
+
+    return !isLoggedIn ? (
+      <div onClick={propsForRender.onLoginClick}>{loginJSX}</div>
+    ) : (
+      <div onClick={propsForRender.onLogoutClick}>{logoutJSX}</div>
+    );
   }
 }
 
-export default FacebookLogin;
+export default FacebookAuth;

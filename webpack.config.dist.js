@@ -1,4 +1,4 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
@@ -9,17 +9,20 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass' },
+      {
+        test: /\.scss$/,
+        loader: 'css?modules&localIdentName=[local]!postcss!sass',
+      },
     ],
   },
 
   externals: {
-    'react': 'react',
+    react: 'react',
     'react-dom': 'ReactDOM',
   },
 
   output: {
-    filename: 'dist/facebook-login-[name].js',
+    filename: 'dist/facebook-auth-[name].js',
     libraryTarget: 'umd',
     library: 'FacebookLogin',
   },
@@ -31,7 +34,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production'),
+        NODE_ENV: JSON.stringify('production'),
       },
     }),
     new webpack.optimize.UglifyJsPlugin({

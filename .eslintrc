@@ -1,20 +1,18 @@
 {
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "es6": true,
+    "commonjs": true
   },
-  "extends": [
-    "eslint:recommended",
-    "airbnb"
-  ],
+  "extends": ["plugin:prettier/recommended"],
   "parser": "babel-eslint",
-  "plugins": [
-    "react"
-  ],
+  "plugins": ["react"],
   "globals": {
     "FB": false
   },
   "rules": {
-    "react/no-multi-comp": 0
+    "react/no-multi-comp": 0,
+    "no-undef": 0
   }
 }

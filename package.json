@@ -1,16 +1,17 @@
 {
-  "name": "react-facebook-login",
-  "version": "4.1.1",
-  "description": "A Component React for Facebook Login",
+  "name": "react-facebook-auth",
+  "version": "1.0.0",
+  "description": "A Component React for Facebook Login Logout",
   "main": "dist/facebook-login-with-button.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development node_modules/.bin/webpack-dev-server --config webpack.config.js",
     "bundle": "cross-env NODE_ENV=production node_modules/.bin/webpack -p --config webpack.config.dist.js",
-    "test": "node_modules/.bin/eslint src/**/*.js"
+    "test": "node_modules/.bin/eslint src/**/*.js",
+    "lint:fix": "eslint src -c .eslintrc --ext js,jsx --fix"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/keppelen/react-facebook-login.git"
+    "url": "https://github.com/silver-xu/react-facebook-auth.git"
   },
   "keywords": [
     "react",
@@ -19,39 +20,47 @@
     "facebook-login",
     "react-facebook-login"
   ],
-  "author": "Giovanni Keppelen <keppelen.as@gmail.com>",
+  "author": "Silver Xu <me@silverxu.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/keppelen/react-facebook-login/issues"
+    "url": "https://github.com/silver-xu/react-facebook-auth/issues"
   },
-  "homepage": "https://github.com/keppelen/react-facebook-login",
+  "homepage": "https://github.com/silver-xu/react-facebook-auth",
   "devDependencies": {
+    "acorn": "^6.1.0",
     "autoprefixer": "^6.0.3",
-    "babel": "^6.5.2",
-    "babel-core": "^6.6.5",
-    "babel-eslint": "^4.1.6",
-    "babel-loader": "^6.2.4",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^7.1.5",
     "babel-plugin-transform-object-assign": "^6.22.0",
-    "babel-preset-es2015": "^6.1.18",
-    "babel-preset-react": "^6.1.18",
-    "babel-preset-stage-0": "^6.5.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "cross-env": "^5.0.0",
-    "css-loader": "^0.19.0",
-    "eslint": "^1.10.3",
-    "eslint-config-airbnb": "^2.0.0",
-    "eslint-plugin-react": "^3.11.3",
-    "node-sass": "^3.3.x",
-    "postcss-loader": "^0.6.0",
+    "css-loader": "^2.1.0",
+    "eslint": "^5.14.1",
+    "eslint-config-airbnb": "^2.1.1",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-import-resolver-webpack": "^0.11.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^3.16.1",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^1.16.4",
     "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-addons-test-utils": "^15.6.2",
     "react-css-modules": "^3.5.0",
     "react-dom": "^16.2.0",
     "react-router": "^3.0.0",
-    "sass-loader": "^3.0.0",
-    "style-loader": "0.12.x",
-    "webpack": "1.12.x",
-    "webpack-dev-server": "1.12.x"
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
   },
   "peerDependencies": {
     "react": "^16.0.0"
