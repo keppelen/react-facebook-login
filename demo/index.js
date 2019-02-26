@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
-import FacebookAuth from '../src/facebook';
+import { FacebookAuth } from '../src/facebook';
 
 const responseFacebook = response => {
   console.log(response);

@@ -1,17 +1,17 @@
-# React Facebook Auth - [![Build Status](https://travis-ci.org/silver-xu/react-facebook-auth.svg?branch=master)](https://travis-ci.org/keppelen/react-facebook-login)
+# React Facebook Auth - [![Build Status](https://travis-ci.org/silver-xu/react-facebook-authenticate.svg?branch=master)](https://travis-ci.org/keppelen/react-facebook-login)
 
-> A Component React for Facebook Auth
+> A Component React for Facebook Login & Logout
 
 ## Getting Started
 
-- `yarn add react-facebook-auth` or `npm install react-facebook-auth`
+- `yarn add react-facebook-authenticate` or `npm install react-facebook-authenticatecode`
 - Your application will also need `react-dom` and `react` installed.
 
 ## Development
 
 ```shell
-git clone https://github.com/silver-xu/react-facebook-auth.git && cd react-facebook-auth
-npm install react react-dom react-facebook-auth --save --force
+git clone https://github.com/silver-xu/react-facebook-authenticate.git && cd react-facebook-authenticate
+npm install react react-dom react-facebook-authenticate --save --force
 npm start
 ```
 
@@ -22,7 +22,7 @@ npm start
 ```js
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FacebookLogin from 'react-facebook-login';
+import FacebookAuth from 'react-facebook-authenticate';
 
 const responseFacebook = response => {
   console.log(response);
@@ -48,7 +48,7 @@ see https://developers.facebook.com/docs/facebook-login/permissions for permissi
 
 ```js
 import React from 'react';
-import FacebookLogin from 'react-facebook-login';
+import { FacebookAuth } from 'react-facebook-authenticate';
 
 class MyComponent extends React.Component {
   responseFacebook(response) {

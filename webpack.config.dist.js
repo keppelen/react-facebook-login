@@ -40,28 +40,12 @@ module.exports = {
   },
 
   output: {
-    filename: 'facebook-auth-[name].js',
+    filename: 'index.js',
     libraryTarget: 'umd',
-    library: 'FacebookLogin',
+    library: 'ReactFacebookAuthenticate',
   },
 
   resolve: {
     extensions: ['.js', '.jsx'],
-  },
-
-  optimization: {
-    minimizer: [
-      // we specify a custom UglifyJsPlugin here to get source maps in production
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        uglifyOptions: {
-          compress: false,
-          ecma: 6,
-          mangle: true,
-        },
-        sourceMap: true,
-      }),
-    ],
   },
 };

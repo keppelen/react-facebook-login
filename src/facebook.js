@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import decodeParamForKey from './decodeParam';
 import classnames from 'classnames';
 
-class FacebookAuth extends React.Component {
+export class FacebookAuth extends React.Component {
   static propTypes = {
     isDisabled: PropTypes.bool,
     callback: PropTypes.func.isRequired,
@@ -26,6 +26,7 @@ class FacebookAuth extends React.Component {
   };
 
   static defaultProps = {
+    isDisabled: false,
     redirectUri: typeof window !== 'undefined' ? window.location.href : '/',
     scope: 'public_profile,email',
     returnScopes: false,
@@ -230,7 +231,7 @@ class FacebookAuth extends React.Component {
   };
 
   render() {
-    const { loginJSX, logoutJSX } = this.props;
+    const { loginJSX, logoutJSX, isDisabled } = this.props;
     const { isLoggedIn } = this.state;
 
     if (!(loginJSX || logoutJSX)) {
@@ -240,7 +241,7 @@ class FacebookAuth extends React.Component {
     const propsForRender = {
       onLoginClick: this.handleLoginClick,
       onLogoutClick: this.handleLogoutClick,
-      isDisabled: !!this.props.isDisabled,
+      isDisabled: !!isDisabled,
       isProcessing: this.state.isProcessing,
       isSdkLoaded: this.state.isSdkLoaded,
     };
@@ -266,5 +267,3 @@ class FacebookAuth extends React.Component {
     );
   }
 }
-
-export default FacebookAuth;
