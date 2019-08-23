@@ -181,7 +181,6 @@ export default MyComponent;
 
 
 ## Parameters
-
 |    params    |     value           |                default value                        |
 |:------------:|:-------------------:|:---------------------------------------------------:|
 |     appId    |     string          |                Required                             |
@@ -201,6 +200,7 @@ export default MyComponent;
 |   language   |     string          |                  en_US                              |
 |   onClick    |     function        |                  Initial click on the component     |
 |   isMobile   |     boolean         |                  detected via userAgent             |
+| disableMobileRedirect |    boolean     |                        false                        | set to true for popup authentication on mobile devices |
 |   isDisabled |     boolean         |                  undefined                          |
 |     tag      |     string          |                  HTML Element, Ex: 'a', 'button'             |
 |   onFailure  |     function        | optional function to separatere the failed init     |
