@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getParamsFromObject from './objectToParams';
+import decodeParamForKey from './decodeParam';
 
 const getIsMobile = () => {
   let isMobile = false;
@@ -23,7 +24,7 @@ class FacebookLogin extends React.Component {
     appId: PropTypes.string.isRequired,
     xfbml: PropTypes.bool,
     cookie: PropTypes.bool,
-    authType: PropTypes.bool,
+    authType: PropTypes.string,
     scope: PropTypes.string,
     state: PropTypes.string,
     responseType: PropTypes.string,
@@ -48,7 +49,7 @@ class FacebookLogin extends React.Component {
     cookie: false,
     authType: '',
     fields: 'name',
-    version: '2.3',
+    version: '3.1',
     language: 'en_US',
     disableMobileRedirect: false,
     isMobile: getIsMobile(),
@@ -94,7 +95,7 @@ class FacebookLogin extends React.Component {
   }
 
   setFbAsyncInit() {
-    const { appId, xfbml, cookie, version, autoLoad, state } = this.props;
+    const { appId, xfbml, cookie, version, autoLoad } = this.props;
     window.fbAsyncInit = () => {
       window.FB.init({
         version: `v${version}`,
@@ -103,10 +104,18 @@ class FacebookLogin extends React.Component {
         cookie,
       });
       this.setStateIfMounted({ isSdkLoaded: true });
-      if (autoLoad || window.location.search.indexOf(state) !== -1) {
+      if (autoLoad || this.isRedirectedFromFb()) {
         window.FB.getLoginStatus(this.checkLoginAfterRefresh);
       }
     };
+  }
+
+  isRedirectedFromFb() {
+    const params = window.location.search;
+    return (
+      decodeParamForKey(params, 'code') ||
+      decodeParamForKey(params, 'granted_scopes')
+    );
   }
 
   sdkLoaded() {
@@ -181,8 +190,16 @@ class FacebookLogin extends React.Component {
     };
 
     if (this.props.isMobile && !disableMobileRedirect) {
-      window.location.href = `//www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
+      window.location.href = `https://www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
     } else {
+      if (!window.FB) {
+        if (this.props.onFailure) {
+          this.props.onFailure({ status: 'facebookNotLoaded' });
+        }
+
+        return;
+      }
+
       window.FB.login(this.checkLoginState, { scope, return_scopes: returnScopes, auth_type: params.auth_type });
     }
   };
