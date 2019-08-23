@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from '../styles/facebook.scss';
 import getParamsFromObject from './objectToParams';
+import decodeParamForKey from './decodeParam';
 
 const getIsMobile = () => {
   let isMobile = false;
@@ -16,17 +16,6 @@ const getIsMobile = () => {
   return isMobile;
 };
 
-// https://www.w3.org/TR/html5/disabled-elements.html#disabled-elements
-const _shouldAddDisabledProp = (tag) => [
-  'button',
-  'input',
-  'select',
-  'textarea',
-  'optgroup',
-  'option',
-  'fieldset',
-].indexOf((tag + '').toLowerCase()) >= 0;
-
 class FacebookLogin extends React.Component {
 
   static propTypes = {
@@ -35,47 +24,38 @@ class FacebookLogin extends React.Component {
     appId: PropTypes.string.isRequired,
     xfbml: PropTypes.bool,
     cookie: PropTypes.bool,
-    reAuthenticate: PropTypes.bool,
+    authType: PropTypes.string,
     scope: PropTypes.string,
+    state: PropTypes.string,
+    responseType: PropTypes.string,
     returnScopes: PropTypes.bool,
     redirectUri: PropTypes.string,
-    textButton: PropTypes.string,
-    typeButton: PropTypes.string,
     autoLoad: PropTypes.bool,
     disableMobileRedirect: PropTypes.bool,
     isMobile: PropTypes.bool,
-    size: PropTypes.string,
     fields: PropTypes.string,
-    cssClass: PropTypes.string,
     version: PropTypes.string,
-    icon: PropTypes.any,
     language: PropTypes.string,
     onClick: PropTypes.func,
-    containerStyle: PropTypes.object,
-    buttonStyle: PropTypes.object,
-    children: PropTypes.node,
-    tag: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
     onFailure: PropTypes.func,
+    render: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
-    textButton: 'Login with Facebook',
-    typeButton: 'button',
     redirectUri: typeof window !== 'undefined' ? window.location.href : '/',
     scope: 'public_profile,email',
     returnScopes: false,
     xfbml: false,
     cookie: false,
-    reAuthenticate: false,
-    size: 'metro',
+    authType: '',
     fields: 'name',
-    cssClass: 'kep-login-facebook',
-    version: '2.3',
+    version: '3.1',
     language: 'en_US',
     disableMobileRedirect: false,
     isMobile: getIsMobile(),
-    tag: 'button',
     onFailure: null,
+    state: 'facebookdirect',
+    responseType: 'code',
   };
 
   state = {
@@ -124,10 +104,18 @@ class FacebookLogin extends React.Component {
         cookie,
       });
       this.setStateIfMounted({ isSdkLoaded: true });
-      if (autoLoad || window.location.search.includes('facebookdirect')) {
+      if (autoLoad || this.isRedirectedFromFb()) {
         window.FB.getLoginStatus(this.checkLoginAfterRefresh);
       }
     };
+  }
+
+  isRedirectedFromFb() {
+    const params = window.location.search;
+    return (
+      decodeParamForKey(params, 'code') ||
+      decodeParamForKey(params, 'granted_scopes')
+    );
   }
 
   sdkLoaded() {
@@ -180,87 +168,56 @@ class FacebookLogin extends React.Component {
       return;
     }
     this.setState({ isProcessing: true });
-    const { scope, appId, onClick, reAuthenticate, returnScopes, redirectUri, disableMobileRedirect } = this.props;
+    const { scope, appId, onClick, returnScopes, responseType, redirectUri, disableMobileRedirect, authType, state } = this.props;
 
     if (typeof onClick === 'function') {
       onClick(e);
       if (e.defaultPrevented) {
+        this.setState({ isProcessing: false });
         return;
       }
     }
 
     const params = {
+
       client_id: appId,
       redirect_uri: redirectUri,
-      state: 'facebookdirect',
+      state,
       return_scopes: returnScopes,
       scope,
+      response_type: responseType,
+      auth_type: authType,
     };
 
-    if (reAuthenticate) {
-      params.auth_type = 'reauthenticate';
-    }
-
     if (this.props.isMobile && !disableMobileRedirect) {
-      window.location.href = `//www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
+      window.location.href = `https://www.facebook.com/dialog/oauth${getParamsFromObject(params)}`;
     } else {
+      if (!window.FB) {
+        if (this.props.onFailure) {
+          this.props.onFailure({ status: 'facebookNotLoaded' });
+        }
+
+        return;
+      }
+
       window.FB.login(this.checkLoginState, { scope, return_scopes: returnScopes, auth_type: params.auth_type });
     }
   };
 
-  style() {
-    const defaultCSS = this.constructor.defaultProps.cssClass;
-    if (this.props.cssClass === defaultCSS) {
-      return <style dangerouslySetInnerHTML={{ __html: styles }}></style>;
-    }
-    return false;
-  }
-
-  // [AdGo] 20.11.2016 - coult not get container class to work
-  containerStyle() {
-    const style = { transition: 'opacity 0.5s' };
-    if (this.state.isProcessing || !this.state.isSdkLoaded || this.props.isDisabled) {
-      style.opacity = 0.6;
-    }
-    return Object.assign(style, this.props.containerStyle);
-  }
-
-  renderOwnButton() {
-    const { cssClass, size, icon, textButton, typeButton, buttonStyle } = this.props;
-    const isIconString = typeof icon === 'string';
-    const optionalProps = {};
-    if (this.props.isDisabled && _shouldAddDisabledProp(this.props.tag)) {
-      optionalProps.disabled = true;
-    }
-    return (
-      <span style={ this.containerStyle() }>
-        {isIconString && (
-          <link
-            rel="stylesheet"
-            href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
-          />
-        )}
-        <this.props.tag
-          type={typeButton}
-          className={`${cssClass} ${size}`}
-          style={ buttonStyle }
-          onClick={this.click}
-          {...optionalProps}
-        >
-          {icon && isIconString && (
-            <i className={`fa ${icon}`}></i>
-          )}
-          {icon && !isIconString && icon}
-          {textButton}
-        </this.props.tag>
-        {this.style()}
-      </span>
-    );
-  }
-
   render() {
-    const { children } = this.props;
-    return children ? <span onClick={this.click}>{ children }</span> : this.renderOwnButton();
+    const { render } = this.props;
+
+    if (!render) {
+      throw new Error('ReactFacebookLogin requires a render prop to render');
+    }
+
+    const propsForRender = {
+      onClick: this.click,
+      isDisabled: !!this.props.isDisabled,
+      isProcessing: this.state.isProcessing,
+      isSdkLoaded: this.state.isSdkLoaded,
+    };
+    return this.props.render(propsForRender);
   }
 }
 

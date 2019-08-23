@@ -2,13 +2,14 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: {
-    demo: ['./src/index.js'],
+    'with-button': ['./src/facebook-with-button.js'],
+    'render-props': ['./src/facebook.js'],
   },
 
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass'},
+      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass' },
     ],
   },
 
@@ -18,7 +19,7 @@ module.exports = {
   },
 
   output: {
-    filename: 'dist/facebook-login.js',
+    filename: 'dist/facebook-login-[name].js',
     libraryTarget: 'umd',
     library: 'FacebookLogin',
   },
