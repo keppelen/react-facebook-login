@@ -1,1 +1,2 @@
-export default from './facebook';
+import Facebook from './facebook'
+export default Facebook
