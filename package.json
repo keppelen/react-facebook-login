@@ -37,7 +37,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "cross-env": "^5.0.0",
     "css-loader": "^0.19.0",
-    "eslint": "^1.10.3",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^2.0.0",
     "eslint-plugin-react": "^3.11.3",
     "node-sass": "^3.3.x",
