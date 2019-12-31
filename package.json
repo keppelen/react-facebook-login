@@ -43,10 +43,10 @@
     "node-sass": "^3.3.x",
     "postcss-loader": "^0.6.0",
     "prop-types": "^15.5.10",
-    "react": "^16.2.0",
+    "react": "^16.12.0",
     "react-addons-test-utils": "^15.6.2",
     "react-css-modules": "^3.5.0",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.12.0",
     "react-router": "^3.0.0",
     "sass-loader": "^3.0.0",
     "style-loader": "0.12.x",
@@ -65,5 +65,8 @@
     "plugins": [
       "transform-object-assign"
     ]
+  },
+  "dependencies": {
+    "react-facebook-login": "^4.1.1"
   }
 }
