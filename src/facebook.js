@@ -200,7 +200,13 @@ class FacebookLogin extends React.Component {
         return;
       }
 
-      window.FB.login(this.checkLoginState, { scope, return_scopes: returnScopes, auth_type: params.auth_type });
+      window.FB.getLoginStatus(response => {
+        if ('connected' === response.status) {
+          this.checkLoginState(response)
+        } else {
+          window.FB.login(this.checkLoginState, { scope, return_scopes: returnScopes, auth_type: params.auth_type })
+        }
+      })
     }
   };
 
