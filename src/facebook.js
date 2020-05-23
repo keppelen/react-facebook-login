@@ -83,6 +83,7 @@ class FacebookLogin extends React.Component {
     if (this.state.isSdkLoaded && nextProps.autoLoad && ! this.props.autoLoad) {
       window.FB.getLoginStatus(this.checkLoginAfterRefresh);
     }
+    return true;
   }
 
   componentWillUnmount() {
