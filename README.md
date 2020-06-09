@@ -185,7 +185,7 @@ export default MyComponent;
 |:------------:|:-------------------:|:---------------------------------------------------:|
 |     appId    |     string          |                Required                             |
 |     size     |     string          |              small - medium - metro                 |
-|     scope    |     string          |      public_profile, email, user_birthday           |
+|     scope    |     string          |      public_profile, email          |
 |     fields   |     string          |              name,email,picture                     |
 |   callback   |     function        |             resultFacebookLogin                     |
 | returnScopes |     boolean         |                  false                              |
