@@ -78,12 +78,22 @@ class FacebookLogin extends React.Component {
       document.body.appendChild(fbRoot);
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if (this.state.isSdkLoaded && nextProps.autoLoad && ! this.props.autoLoad) {
-      window.FB.getLoginStatus(this.checkLoginAfterRefresh);
+
+ 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.isSdkLoaded && nextProps.autoLoad && ! prevState.autoLoad) {
+      return {signedIn: nextProps.signedIn,autoLoad: nextProps.autoLoad};
+    }
+    return null;
+  }
+  
+  componentDidUpdate(prevProps) {
+    if (this.state.isSdkLoaded && this.state.autoLoad && ! prevProps.autoLoad) {
+	  window.FB.getLoginStatus(this.checkLoginAfterRefresh);
     }
   }
-
+  
+  
   componentWillUnmount() {
     this._isMounted = false;
   }
