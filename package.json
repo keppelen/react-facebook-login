@@ -4,8 +4,8 @@
   "description": "A Component React for Facebook Login",
   "main": "dist/facebook-login-with-button.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node_modules/.bin/webpack-dev-server --config webpack.config.js",
-    "bundle": "cross-env NODE_ENV=production node_modules/.bin/webpack -p --config webpack.config.dist.js",
+    "start": "cross-env NODE_ENV=development node_modules/.bin/webpack serve --config webpack.config.js",
+    "bundle": "cross-env NODE_ENV=production node_modules/.bin/webpack --config webpack.config.dist.js",
     "test": "node_modules/.bin/eslint src/**/*.js"
   },
   "repository": {
@@ -26,44 +26,36 @@
   },
   "homepage": "https://github.com/keppelen/react-facebook-login",
   "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-transform-object-assign": "^7.12.13",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7",
     "autoprefixer": "^6.0.3",
-    "babel": "^6.5.2",
-    "babel-core": "^6.6.5",
+    "babel": "^6.23.0",
     "babel-eslint": "^4.1.6",
-    "babel-loader": "^6.2.4",
-    "babel-plugin-transform-object-assign": "^6.22.0",
-    "babel-preset-es2015": "^6.1.18",
-    "babel-preset-react": "^6.1.18",
-    "babel-preset-stage-0": "^6.5.0",
+    "babel-loader": "^8.2.2",
     "cross-env": "^5.0.0",
-    "css-loader": "^0.19.0",
+    "css-loader": "^5.2.1",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.0.0",
     "eslint-plugin-react": "^3.11.3",
-    "node-sass": "^3.3.x",
-    "postcss-loader": "^0.6.0",
+    "node-sass": "5.0.0",
     "prop-types": "^15.5.10",
     "react": "^16.2.0",
     "react-addons-test-utils": "^15.6.2",
     "react-css-modules": "^3.5.0",
     "react-dom": "^16.2.0",
     "react-router": "^3.0.0",
-    "sass-loader": "^3.0.0",
-    "style-loader": "0.12.x",
-    "webpack": "1.12.x",
-    "webpack-dev-server": "1.12.x"
+    "sass": "^1.32.8",
+    "sass-loader": "^11.0.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.32.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^3.11.2"
   },
   "peerDependencies": {
     "react": "^16.0.0"
   },
-  "babel": {
-    "presets": [
-      "es2015",
-      "react",
-      "stage-0"
-    ],
-    "plugins": [
-      "transform-object-assign"
-    ]
-  }
+  "dependencies": {}
 }

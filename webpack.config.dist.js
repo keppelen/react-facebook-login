@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
   entry: {
@@ -7,10 +8,14 @@ module.exports = {
   },
 
   module: {
-    loaders: [
-      { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass' },
-    ],
+    rules: [{
+      test: /\.js$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/
+    }, {
+      test: /\.s[ac]ss$/i,
+      use: [ "style-loader", "css-loader", "sass-loader" ],
+    }]
   },
 
   externals: {
@@ -19,13 +24,14 @@ module.exports = {
   },
 
   output: {
-    filename: 'dist/facebook-login-[name].js',
+    filename: 'facebook-login-[name].js',
+    path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'umd',
     library: 'FacebookLogin',
   },
 
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['.js'],
   },
 
   plugins: [
@@ -34,12 +40,5 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production'),
       },
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
   ],
 };
