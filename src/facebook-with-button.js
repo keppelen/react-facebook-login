@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react'
 import PropTypes from 'prop-types';
 import styles from '../styles/facebook.scss';
 import FacebookLogin from './facebook';
@@ -15,67 +15,60 @@ const _shouldAddDisabledProp = (tag) => [
   'fieldset',
 ].indexOf((tag + '').toLowerCase()) >= 0;
 
-class ReactFacebookLoginWithButton extends React.Component {
-  static propTypes = {
-    textButton: PropTypes.string,
-    typeButton: PropTypes.string,
-    size: PropTypes.string,
-    cssClass: PropTypes.string,
-    icon: PropTypes.any,
-    containerStyle: PropTypes.object,
-    buttonStyle: PropTypes.object,
-    tag: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  };
+export default function ReactFacebookLoginWithButton({
+  textButton = 'Login with Facebook',
+  typeButton = 'button',
+  size = 'metro',
+  cssClass = 'kep-login-facebook',
+  icon,
+  containerStyle,
+  buttonStyle,
+  fields = 'name',
+  tag = 'button',
+  ...props
+}) {
 
-  static defaultProps = {
-    textButton: 'Login with Facebook',
-    typeButton: 'button',
-    size: 'metro',
-    fields: 'name',
-    cssClass: 'kep-login-facebook',
-    tag: 'button',
-  };
-
-  style() {
-    const defaultCSS = this.constructor.defaultProps.cssClass;
-    if (this.props.cssClass === defaultCSS) {
+  function style() {
+    if (cssClass) {
       return <style dangerouslySetInnerHTML={{ __html: styles }}></style>;
     }
     return false;
   }
 
-  containerStyle(renderProps) {
+  function containerStyle(renderProps) {
     const { isProcessing, isSdkLoaded, isDisabled } = renderProps;
 
     const style = { transition: 'opacity 0.5s' };
     if (isProcessing || !isSdkLoaded || isDisabled) {
       style.opacity = 0.6;
     }
-    return Object.assign(style, this.props.containerStyle);
+    return Object.assign(style, containerStyle);
   }
 
-  renderOwnButton(renderProps) {
-    const { cssClass, size, icon, textButton, typeButton, buttonStyle } = this.props;
-
+  function renderOwnButton(renderProps) {
     const { onClick, isDisabled } = renderProps;
 
     const isIconString = typeof icon === 'string';
     const optionalProps = {};
-    if (isDisabled && _shouldAddDisabledProp(this.props.tag)) {
+
+    if (isDisabled && _shouldAddDisabledProp(tag)) {
       optionalProps.disabled = true;
     }
+
+    const Tag = tag;
+
     return (
-      <span style={ this.containerStyle(renderProps) }>
+      <span style={containerStyle(renderProps)}>
         {isIconString && (
           <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
           />
         )}
-        <this.props.tag
+        <Tag
           type={typeButton}
           className={`${cssClass} ${size}`}
-          style={ buttonStyle }
+          style={buttonStyle}
           onClick={onClick}
           {...optionalProps}
         >
@@ -84,17 +77,25 @@ class ReactFacebookLoginWithButton extends React.Component {
           )}
           {icon && !isIconString && icon}
           {textButton}
-        </this.props.tag>
-        {this.style()}
+        </Tag>
+        {style()}
       </span>
     );
   }
 
-  render() {
-    return (
-      <FacebookLogin {...this.props} render={renderProps => this.renderOwnButton(renderProps)} />
-    );
-  }
+  return (
+    <FacebookLogin {...props} render={renderProps => renderOwnButton(renderProps)} />
+  );
 }
 
-export default ReactFacebookLoginWithButton;
+ReactFacebookLoginWithButton.propTypes = {
+  textButton: PropTypes.string,
+  typeButton: PropTypes.string,
+  size: PropTypes.string,
+  cssClass: PropTypes.string,
+  icon: PropTypes.any,
+  containerStyle: PropTypes.object,
+  buttonStyle: PropTypes.object,
+  fields: PropTypes.string,
+  tag: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+};

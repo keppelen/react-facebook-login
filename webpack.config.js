@@ -1,35 +1,24 @@
-'use strict';
-
 var path = require('path');
-var webpack = require('webpack');
 
 module.exports = {
-
-  devtool: 'eval',
-
-  entry: {
-    demo: ['webpack/hot/dev-server', './demo/index.js'],
-  },
-
+  entry: './demo/index.js',
   module: {
-    loaders: [
-      { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass'},
-    ]
+    rules: [{
+      test: /\.js$/,
+      loader: 'babel-loader',
+      exclude: /node_modules/
+    }, {
+      test: /\.s[ac]ss$/i,
+      use: [ "style-loader", "css-loader", "sass-loader" ],
+    }]
   },
-
   output: {
-    filename: 'demo/bundle.js'
+    filename: './bundle.js',
+    path: path.resolve(__dirname, 'demo'),
   },
-
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['.js'],
   },
-
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
-
   devServer: {
     contentBase: './demo'
   }
