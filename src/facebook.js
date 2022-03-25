@@ -1,5 +1,5 @@
 // @flow
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import getParamsFromObject from './objectToParams';
 import decodeParamForKey from './decodeParam';
@@ -20,7 +20,7 @@ function isRedirectedFromFb() {
   const params = window.location.search;
   return (
     decodeParamForKey(params, 'state') === 'facebookdirect' && (decodeParamForKey(params, 'code') ||
-    decodeParamForKey(params, 'granted_scopes'))
+      decodeParamForKey(params, 'granted_scopes'))
   );
 }
 

@@ -1,4 +1,5 @@
 // @flow
+import * as React from 'react'
 import PropTypes from 'prop-types';
 import styles from '../styles/facebook.scss';
 import FacebookLogin from './facebook';
@@ -57,7 +58,7 @@ export default function ReactFacebookLoginWithButton({
     const Tag = tag;
 
     return (
-      <span style={ containerStyle(renderProps) }>
+      <span style={containerStyle(renderProps)}>
         {isIconString && (
           <link
             rel="stylesheet"
@@ -67,7 +68,7 @@ export default function ReactFacebookLoginWithButton({
         <Tag
           type={typeButton}
           className={`${cssClass} ${size}`}
-          style={ buttonStyle }
+          style={buttonStyle}
           onClick={onClick}
           {...optionalProps}
         >
