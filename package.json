@@ -1,6 +1,6 @@
 {
-  "name": "react-facebook-login",
-  "version": "4.1.1",
+  "name": "react17-facebook-login",
+  "version": "4.2.1",
   "description": "A Component React for Facebook Login",
   "main": "dist/facebook-login-with-button.js",
   "scripts": {
