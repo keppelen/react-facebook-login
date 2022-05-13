@@ -1,6 +1,6 @@
 {
   "name": "react-facebook-login",
-  "version": "4.1.1",
+  "version": "5.0.0",
   "description": "A Component React for Facebook Login",
   "main": "dist/facebook-login-with-button.js",
   "scripts": {
@@ -26,41 +26,42 @@
   },
   "homepage": "https://github.com/keppelen/react-facebook-login",
   "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-react": "^7.16.7",
+    "babel-eslint": "^10.1.0",
     "autoprefixer": "^6.0.3",
-    "babel": "^6.5.2",
-    "babel-core": "^6.6.5",
-    "babel-eslint": "^4.1.6",
-    "babel-loader": "^6.2.4",
+    "babel-loader": "^8.2.5",
+    "babel-plugin-lodash": "^3.3.2",
+    "babel-plugin-react-transform": "^3.0.0",
     "babel-plugin-transform-object-assign": "^6.22.0",
-    "babel-preset-es2015": "^6.1.18",
-    "babel-preset-react": "^6.1.18",
-    "babel-preset-stage-0": "^6.5.0",
+    "react-router-dom": "^6.3.0",
     "cross-env": "^5.0.0",
     "css-loader": "^0.19.0",
-    "eslint": "^1.10.3",
+    "eslint": "^8.15.0",
     "eslint-config-airbnb": "^2.0.0",
     "eslint-plugin-react": "^3.11.3",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.1",
     "postcss-loader": "^0.6.0",
     "prop-types": "^15.5.10",
-    "react": "^16.2.0",
-    "react-addons-test-utils": "^15.6.2",
+    "react": "^18.1.0",
     "react-css-modules": "^3.5.0",
-    "react-dom": "^16.2.0",
-    "react-router": "^3.0.0",
-    "sass-loader": "^3.0.0",
+    "react-dom": "^18.1.0",
+    "react-router": "^6.3.0",
+    "sass-loader": "^12.6.0",
     "style-loader": "0.12.x",
-    "webpack": "1.12.x",
-    "webpack-dev-server": "1.12.x"
+    "webpack": "^5.72.1",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.9.0"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^18.0.0"
   },
   "babel": {
     "presets": [
-      "es2015",
-      "react",
-      "stage-0"
+      "@babel/react",
+      "@babel/preset-env"
     ],
     "plugins": [
       "transform-object-assign"
