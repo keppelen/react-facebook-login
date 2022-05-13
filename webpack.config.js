@@ -12,14 +12,15 @@ module.exports = {
   },
 
   module: {
-    loaders: [
-      { test: /\.js$/, loader: 'babel', exclude: /node_modules/ },
-      { test: /\.scss$/, loader: 'css?modules&localIdentName=[local]!postcss!sass'},
-    ]
+    rules: [
+      { test: /\.js$/, use: ['babel-loader'], exclude: /node_modules/ },
+      { test: /\.scss$/, use: ['css-loader', 'sass-loader'] },
+    ],
   },
 
   output: {
-    filename: 'demo/bundle.js'
+    filename: 'demo/bundle.js',
+    publicPath: '/',
   },
 
   resolve: {
@@ -27,10 +28,10 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
 
   devServer: {
-    contentBase: './demo'
-  }
+    static: './demo',
+  },
 };
